@@ -1,1 +1,2 @@
-include ':worldwind', ':worldwind-examples', ':worldwind-tutorials'
+include ':worldwindfx', ':worldwindfx-windows'
+

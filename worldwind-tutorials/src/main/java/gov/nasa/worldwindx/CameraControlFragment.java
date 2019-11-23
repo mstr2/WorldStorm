@@ -166,8 +166,8 @@ public class CameraControlFragment extends BasicGlobeFragment {
                 this.lastRotation = 0;
             } else if (state == WorldWind.CHANGED) {
                 // Apply the change in tilt to the navigator, relative to when the gesture began.
-                double headingDegrees = 180 * dx / this.wwd.getWidth();
-                double tiltDegrees = -180 * dy / this.wwd.getHeight();
+                double headingDegrees = 180 * dx / this.wwd.getViewWidth();
+                double tiltDegrees = -180 * dy / this.wwd.getViewHeight();
 
                 this.camera.heading = WWMath.normalizeAngle360(this.beginCamera.heading + headingDegrees);
                 this.camera.tilt = this.beginCamera.tilt + tiltDegrees;

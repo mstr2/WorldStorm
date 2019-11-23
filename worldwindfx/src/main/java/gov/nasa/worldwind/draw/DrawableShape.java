@@ -1,0 +1,119 @@
+/*
+ * Copyright (c) 2016 United States Government as represented by the Administrator of the
+ * National Aeronautics and Space Administration. All Rights Reserved.
+ */
+
+package gov.nasa.worldwind.draw;
+
+import gov.nasa.worldwind.geom.Matrix4;
+import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.Platform;
+import gov.nasa.worldwind.util.Pool;
+
+public class DrawableShape implements Drawable {
+
+    public DrawShapeState drawState = new DrawShapeState();
+
+    private Matrix4 mvpMatrix = new Matrix4();
+
+    private Pool<DrawableShape> pool;
+
+    public DrawableShape() {
+    }
+
+    public static DrawableShape obtain(Pool<DrawableShape> pool) {
+        DrawableShape instance = pool.acquire(); // get an instance from the pool
+        return (instance != null) ? instance.setPool(pool) : new DrawableShape().setPool(pool);
+    }
+
+    private DrawableShape setPool(Pool<DrawableShape> pool) {
+        this.pool = pool;
+        return this;
+    }
+
+    @Override
+    public void recycle() {
+        this.drawState.reset();
+
+        if (this.pool != null) { // return this instance to the pool
+            this.pool.release(this);
+            this.pool = null;
+        }
+    }
+
+    @Override
+    public void draw(DrawContext dc) {
+        // TODO shape batching
+        if (this.drawState.program == null || !this.drawState.program.useProgram(dc)) {
+            return; // program unspecified or failed to build
+        }
+
+        if (this.drawState.vertexBuffer == null || !this.drawState.vertexBuffer.bindBuffer(dc)) {
+            return; // vertex buffer unspecified or failed to bind
+        }
+
+        if (this.drawState.elementBuffer == null || !this.drawState.elementBuffer.bindBuffer(dc)) {
+            return; // element buffer unspecified or failed to bind
+        }
+
+        GL gl = Platform.getGL();
+
+        // Use the draw context's pick mode.
+        this.drawState.program.enablePickMode(dc.pickMode);
+
+        // Use the draw context's modelview projection matrix, transformed to shape local coordinates.
+        if (this.drawState.depthOffset != 0) {
+            this.mvpMatrix.set(dc.projection).offsetProjectionDepth(this.drawState.depthOffset);
+            this.mvpMatrix.multiplyByMatrix(dc.modelview);
+        } else {
+            this.mvpMatrix.set(dc.modelviewProjection);
+        }
+        this.mvpMatrix.multiplyByTranslation(this.drawState.vertexOrigin.x, this.drawState.vertexOrigin.y, this.drawState.vertexOrigin.z);
+        this.drawState.program.loadModelviewProjection(this.mvpMatrix);
+
+        // Disable triangle backface culling if requested.
+        if (!this.drawState.enableCullFace) {
+            gl.glDisable(GL.GL_CULL_FACE);
+        }
+
+        // Disable depth testing if requested.
+        if (!this.drawState.enableDepthTest) {
+            gl.glDisable(GL.GL_DEPTH_TEST);
+        }
+
+        // Make multi-texture unit 0 active.
+        dc.activeTextureUnit(GL.GL_TEXTURE0);
+
+        // Use the shape's vertex point attribute and vertex texture coordinate attribute.
+        gl.glEnableVertexAttribArray(1 /*vertexTexCoord*/);
+        gl.glVertexAttribPointer(0 /*vertexPoint*/, 3, GL.GL_FLOAT, false, this.drawState.vertexStride, 0 /*offset*/);
+
+        // Draw the specified primitives.
+        for (int idx = 0; idx < this.drawState.primCount; idx++) {
+            DrawShapeState.DrawElements prim = this.drawState.prims[idx];
+            this.drawState.program.loadColor(prim.color);
+
+            if (prim.texture != null && prim.texture.bindTexture(dc)) {
+                this.drawState.program.loadTexCoordMatrix(prim.texCoordMatrix);
+                this.drawState.program.enableTexture(true);
+            } else {
+                this.drawState.program.enableTexture(false);
+            }
+
+            gl.glVertexAttribPointer(1 /*vertexTexCoord*/, prim.texCoordAttrib.size, GL.GL_FLOAT, false, this.drawState.vertexStride, prim.texCoordAttrib.offset);
+            gl.glLineWidth(prim.lineWidth);
+            gl.glDrawElements(prim.mode, prim.count, prim.type, prim.offset);
+        }
+
+        // Restore the default WorldWind OpenGL state.
+        if (!this.drawState.enableCullFace) {
+            gl.glEnable(GL.GL_CULL_FACE);
+        }
+        if (!this.drawState.enableDepthTest) {
+            gl.glEnable(GL.GL_DEPTH_TEST);
+        }
+        gl.glLineWidth(1);
+        gl.glEnable(GL.GL_CULL_FACE);
+        gl.glDisableVertexAttribArray(1 /*vertexTexCoord*/);
+    }
+}
