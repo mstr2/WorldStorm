@@ -8,7 +8,7 @@ public class WinPlatform implements PlatformImpl {
         System.load("worldwindFX-windows-native");
     }
 
-    private final GLInterface gl = new GLInterface();
+    private final GLES20Impl gl = new GLES20Impl();
     private final EGLInterface egl = new EGLInterface();
 
     @Override

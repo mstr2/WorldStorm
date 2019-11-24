@@ -447,6 +447,49 @@ public class WorldWindNode extends Region implements WorldWindow, MessageListene
     private final Runnable doFrameMethod = this::doFrame;
 
     private void doFrame() {
+        EGL egl = Platform.getEGL();
+        long display = egl.eglGetDisplay(EGL.EGL_DEFAULT_DISPLAY);
+        if (display == EGL.EGL_NO_DISPLAY) {
+            throw new RuntimeException("EGL_NO_DISPLAY");
+        }
+
+        long[] configs = new long[1];
+        int[] numConfigs = new int[1];
+        int[] configAttribs = new int[] {
+                EGL.EGL_SURFACE_TYPE, EGL.EGL_WINDOW_BIT,
+                EGL.EGL_RENDERABLE_TYPE, EGL.EGL_OPENGL_ES2_BIT,
+                EGL.EGL_SAMPLES, 1,
+                EGL.EGL_SAMPLE_BUFFERS, 4,
+                EGL.EGL_BUFFER_SIZE, 32,
+                EGL.EGL_DEPTH_SIZE, 24,
+                EGL.EGL_STENCIL_SIZE, 8,
+                EGL.EGL_NONE
+        };
+
+        if (!egl.eglChooseConfig(display, configAttribs, configs, numConfigs)) {
+            
+        }
+
+        long windowHandle = WindowHelper.getPeer(getScene().getWindow()).getRawHandle();
+        long surface = egl.eglCreateWindowSurface(display, configs[0], windowHandle, null);
+
+        int[] surfaceAttribs = new int[] {
+                EGL.EGL_WIDTH, 1920,
+                EGL.EGL_HEIGHT, 1080,
+                EGL.EGL_NONE,
+        };
+
+        egl.eglCreatePbufferSurface(display, configs[0], surfaceAttribs);
+        int[] contextAttribs = new int[] {
+                EGL.EGL_CONTEXT_CLIENT_VERSION, 2,
+                EGL.EGL_NONE
+        };
+
+        long context = egl.eglCreateContext(display, configs[0], EGL.EGL_NO_CONTEXT, contextAttribs);
+
+        egl.eglBindAPI(EGL.EGL_OPENGL_ES_API);
+        egl.eglMakeCurrent(display, surface, surface, context);
+
         // Skip frames when OpenGL thread has fallen two or more frames behind. Continue to request frame callbacks
         // until the OpenGL thread catches up.
         if (this.frameQueue.size() >= MAX_FRAME_QUEUE_SIZE) {
@@ -466,43 +509,6 @@ public class WorldWindNode extends Region implements WorldWindow, MessageListene
             Logger.logMessage(Logger.ERROR, "WorldWindNode", "doFrame",
                 "Exception while rendering frame.", e);
         }
-
-        EGL egl = Platform.getEGL();
-        long display = egl.eglGetDisplay(EGL.EGL_DEFAULT_DISPLAY);
-        long[] configs = new long[1];
-        int[] numConfigs = new int[1];
-        int[] configAttribs = new int[] {
-            EGL.EGL_SURFACE_TYPE, EGL.EGL_WINDOW_BIT,
-            EGL.EGL_RENDERABLE_TYPE, EGL.EGL_OPENGL_ES2_BIT,
-            EGL.EGL_SAMPLES, 1,
-            EGL.EGL_SAMPLE_BUFFERS, 4,
-            EGL.EGL_BUFFER_SIZE, 32,
-            EGL.EGL_DEPTH_SIZE, 24,
-            EGL.EGL_STENCIL_SIZE, 8,
-            EGL.EGL_NONE
-        };
-
-        egl.eglChooseConfig(display, configAttribs, configs, numConfigs);
-
-        long windowHandle = WindowHelper.getPeer(getScene().getWindow()).getRawHandle();
-        long surface = egl.eglCreateWindowSurface(display, configs[0], windowHandle, null);
-
-        int[] surfaceAttribs = new int[] {
-            EGL.EGL_WIDTH, 1920,
-            EGL.EGL_HEIGHT, 1080,
-            EGL.EGL_NONE,
-        };
-
-        egl.eglCreatePbufferSurface(display, configs[0], surfaceAttribs);
-        int[] contextAttribs = new int[] {
-            EGL.EGL_CONTEXT_CLIENT_VERSION, 2,
-            EGL.EGL_NONE
-        };
-
-        long context = egl.eglCreateContext(display, configs[0], EGL.EGL_NO_CONTEXT, contextAttribs);
-
-        egl.eglBindAPI(EGL.EGL_OPENGL_ES_API);
-        egl.eglMakeCurrent(display, surface, surface, context);
     }
 
     @Override

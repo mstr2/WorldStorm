@@ -1,2 +1,3 @@
 include ':worldwindfx', ':worldwindfx-windows'
+include 'worldwindfx-examples'
 

@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/worldwindfx" />
+            <option value="$PROJECT_DIR$/worldwindfx-examples" />
             <option value="$PROJECT_DIR$/worldwindfx-windows" />
           </set>
         </option>

@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29418.71
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "worldwindfx-windows", "worldwindfx-windows.vcxproj", "{DA14CEEA-A54E-4421-9B7D-4F77C92F0C65}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DA14CEEA-A54E-4421-9B7D-4F77C92F0C65}.Debug|x64.ActiveCfg = Debug|x64
+		{DA14CEEA-A54E-4421-9B7D-4F77C92F0C65}.Debug|x64.Build.0 = Debug|x64
+		{DA14CEEA-A54E-4421-9B7D-4F77C92F0C65}.Release|x64.ActiveCfg = Release|x64
+		{DA14CEEA-A54E-4421-9B7D-4F77C92F0C65}.Release|x64.Build.0 = Release|x64
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C5B4FB8B-FA18-4E24-98FB-116B258ACC0D}
+	EndGlobalSection
+EndGlobal

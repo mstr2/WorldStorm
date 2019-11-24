@@ -3,14 +3,10 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/WorldWindFX.iml" filepath="$PROJECT_DIR$/.idea/modules/WorldWindFX.iml" group="WorldWindFX" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwind-tutorials/WorldWindFX-worldwind-tutorials.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwind-tutorials/WorldWindFX-worldwind-tutorials.iml" group="WorldWindFX/worldwind-tutorials" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx/WorldWindFX-worldwindfx.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx/WorldWindFX-worldwindfx.iml" group="WorldWindFX/worldwindfx" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx-windows/WorldWindFX-worldwindfx-windows.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx-windows/WorldWindFX-worldwindfx-windows.iml" group="WorldWindFX/worldwindfx-windows" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/WorldWindGLES.iml" filepath="$PROJECT_DIR$/.idea/modules/WorldWindGLES.iml" group="WorldWindGLES" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwind-tutorials/org.worldwind-worldwind-tutorials.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwind-tutorials/org.worldwind-worldwind-tutorials.iml" group="WorldWindFX/worldwind-tutorials" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwind-tutorials/worldwind-tutorials.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwind-tutorials/worldwind-tutorials.iml" group="WorldWindGLES/worldwind-tutorials" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx/worldwindFX.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx/worldwindFX.iml" group="WorldWindGLES/worldwindFX" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx-windows/worldwindFX-windows.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx-windows/worldwindFX-windows.iml" group="WorldWindGLES/worldwindFX-windows" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwind-tutorials/worldwind-tutorials.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwind-tutorials/worldwind-tutorials.iml" group="WorldWindFX/worldwind-tutorials" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx/worldwindfx.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx/worldwindfx.iml" group="WorldWindFX/worldwindfx" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx-examples.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx-examples.iml" group="WorldWindFX/worldwindfx-examples" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/worldwindfx-windows/worldwindfx-windows.iml" filepath="$PROJECT_DIR$/.idea/modules/worldwindfx-windows/worldwindfx-windows.iml" group="WorldWindFX/worldwindfx-windows" />
     </modules>
   </component>
 </project>
