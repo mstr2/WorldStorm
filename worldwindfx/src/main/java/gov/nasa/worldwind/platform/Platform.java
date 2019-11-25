@@ -22,13 +22,12 @@ public final class Platform {
         return platformImpl.openDatabase(pathName, o, flags);
     }
 
-    @SuppressWarnings("unchecked")
     private static PlatformImpl initializePlatform() {
         try {
             String os = System.getProperty("os.name").toLowerCase();
             if (os.contains("win")) {
-                Class platformClass = Class.forName("gov.nasa.worldwind.platform.WinPlatform");
-                return (PlatformImpl)platformClass.getConstructor().newInstance();
+                Class<?> platformClass = Class.forName("gov.nasa.worldwind.platform.WinPlatform");
+                return (PlatformImpl) platformClass.getConstructor().newInstance();
             } else {
                 throw new RuntimeException("Unsupported operating system.");
             }
@@ -38,5 +37,4 @@ public final class Platform {
             throw new RuntimeException("Error initializing platform implementation.", ex);
         }
     }
-
 }

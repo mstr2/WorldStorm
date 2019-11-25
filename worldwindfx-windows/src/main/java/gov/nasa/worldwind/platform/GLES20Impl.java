@@ -1,952 +1,687 @@
 package gov.nasa.worldwind.platform;
 
+import java.io.File;
 import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
 public final class GLES20Impl implements GL {
+    static {
+        File f = new File(new File("."), "worldwindfx-windows.dll");
+        System.load(f.getAbsolutePath());
+    }
 
     @Override
-    public native void glActiveTexture(int texture)
+    public native void glActiveTexture(int texture);
 
-    ;
-
-    @Override
-    public native void glAttachShader(int program, int shader)
-
-    ;
-
-    @Override
-    public native void glBindAttribLocation(int program, int index, String name)
-
-    ;
-
-    @Override
-    public native void glBindBuffer(int target, int buffer)
-
-    ;
-
     @Override
-    public native void glBindFramebuffer(int target, int framebuffer)
-
-    ;
+    public native void glAttachShader(int program, int shader);
 
     @Override
-    public native void glBindRenderbuffer(int target, int renderbuffer)
+    public native void glBindAttribLocation(int program, int index, String name);
 
-    ;
-
     @Override
-    public native void glBindTexture(int target, int texture)
-
-    ;
+    public native void glBindBuffer(int target, int buffer);
 
     @Override
-    public native void glBlendColor(float red, float green, float blue, float alpha)
+    public native void glBindFramebuffer(int target, int framebuffer);
 
-    ;
-
     @Override
-    public native void glBlendEquation(int mode)
+    public native void glBindRenderbuffer(int target, int renderbuffer);
 
-    ;
-
     @Override
-    public native void glBlendEquationSeparate(int modeRGB, int modeAlpha)
-
-    ;
+    public native void glBindTexture(int target, int texture);
 
     @Override
-    public native void glBlendFunc(int sfactor, int dfactor)
+    public native void glBlendColor(float red, float green, float blue, float alpha);
 
-    ;
-
     @Override
-    public native void glBlendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha)
+    public native void glBlendEquation(int mode);
 
-    ;
-
     @Override
-    public native void glBufferData(int target, int size, Buffer data, int usage)
-
-    ;
+    public native void glBlendEquationSeparate(int modeRGB, int modeAlpha);
 
     @Override
-    public native void glBufferSubData(int target, int offset, int size, Buffer data)
+    public native void glBlendFunc(int sfactor, int dfactor);
 
-    ;
-
     @Override
-    public native int glCheckFramebufferStatus(int target)
-    ;
+    public native void glBlendFuncSeparate(int srcRGB, int dstRGB, int srcAlpha, int dstAlpha);
 
     @Override
-    public native void glClear(int mask)
+    public native void glBufferData(int target, int size, Buffer data, int usage);
 
-    ;
-
     @Override
-    public native void glClearColor(float red, float green, float blue, float alpha)
-
-    ;
+    public native void glBufferSubData(int target, int offset, int size, Buffer data);
 
     @Override
-    public native void glClearDepthf(float depth)
+    public native int glCheckFramebufferStatus(int target);
 
-    ;
-
     @Override
-    public native void glClearStencil(int s)
-
-    ;
+    public native void glClear(int mask);
 
     @Override
-    public native void glColorMask(boolean red, boolean green, boolean blue, boolean alpha)
+    public native void glClearColor(float red, float green, float blue, float alpha);
 
-    ;
-
     @Override
-    public native void glCompileShader(int shader)
+    public native void glClearDepthf(float depth);
 
-    ;
-
     @Override
-    public native void glCompressedTexImage2D(int target, int level, int internalformat, int width, int height, int border, int imageSize, Buffer data)
-
-    ;
+    public native void glClearStencil(int s);
 
     @Override
-    public native void glCompressedTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int imageSize, Buffer data)
+    public native void glColorMask(boolean red, boolean green, boolean blue, boolean alpha);
 
-    ;
-
     @Override
-    public native void glCopyTexImage2D(int target, int level, int internalformat, int x, int y, int width, int height, int border)
+    public native void glCompileShader(int shader);
 
-    ;
-
     @Override
-    public native void glCopyTexSubImage2D(int target, int level, int xoffset, int yoffset, int x, int y, int width, int height)
-
-    ;
+    public native void glCompressedTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            int imageSize,
+            Buffer data);
 
     @Override
-    public native int glCreateProgram()
-    ;
+    public native void glCompressedTexSubImage2D(
+            int target,
+            int level,
+            int xoffset,
+            int yoffset,
+            int width,
+            int height,
+            int format,
+            int imageSize,
+            Buffer data);
 
     @Override
-    public native int glCreateShader(int type)
-    ;
+    public native void glCopyTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int x,
+            int y,
+            int width,
+            int height,
+            int border);
 
     @Override
-    public native void glCullFace(int mode)
+    public native void glCopyTexSubImage2D(
+            int target, int level, int xoffset, int yoffset, int x, int y, int width, int height);
 
-    ;
-
     @Override
-    public native void glDeleteBuffers(int n, int[] buffers, int offset)
+    public native int glCreateProgram();
 
-    ;
-
     @Override
-    public native void glDeleteBuffers(int n, IntBuffer buffers)
-
-    ;
+    public native int glCreateShader(int type);
 
     @Override
-    public native void glDeleteFramebuffers(int n, int[] framebuffers, int offset)
+    public native void glCullFace(int mode);
 
-    ;
-
     @Override
-    public native void glDeleteFramebuffers(int n, IntBuffer framebuffers)
-
-    ;
+    public native void glDeleteBuffers(int n, int[] buffers, int offset);
 
     @Override
-    public native void glDeleteProgram(int program)
+    public native void glDeleteBuffers(int n, IntBuffer buffers);
 
-    ;
-
     @Override
-    public native void glDeleteRenderbuffers(int n, int[] renderbuffers, int offset)
+    public native void glDeleteFramebuffers(int n, int[] framebuffers, int offset);
 
-    ;
-
     @Override
-    public native void glDeleteRenderbuffers(int n, IntBuffer renderbuffers)
-
-    ;
+    public native void glDeleteFramebuffers(int n, IntBuffer framebuffers);
 
     @Override
-    public native void glDeleteShader(int shader)
+    public native void glDeleteProgram(int program);
 
-    ;
-
     @Override
-    public native void glDeleteTextures(int n, int[] textures, int offset)
+    public native void glDeleteRenderbuffers(int n, int[] renderbuffers, int offset);
 
-    ;
-
     @Override
-    public native void glDeleteTextures(int n, IntBuffer textures)
-
-    ;
+    public native void glDeleteRenderbuffers(int n, IntBuffer renderbuffers);
 
     @Override
-    public native void glDepthFunc(int func)
+    public native void glDeleteShader(int shader);
 
-    ;
-
     @Override
-    public native void glDepthMask(boolean flag)
+    public native void glDeleteTextures(int n, int[] textures, int offset);
 
-    ;
-
     @Override
-    public native void glDepthRangef(float zNear, float zFar)
-
-    ;
+    public native void glDeleteTextures(int n, IntBuffer textures);
 
     @Override
-    public native void glDetachShader(int program, int shader)
+    public native void glDepthFunc(int func);
 
-    ;
-
     @Override
-    public native void glDisable(int cap)
-
-    ;
+    public native void glDepthMask(boolean flag);
 
     @Override
-    public native void glDisableVertexAttribArray(int index)
+    public native void glDepthRangef(float zNear, float zFar);
 
-    ;
-
     @Override
-    public native void glDrawArrays(int mode, int first, int count)
+    public native void glDetachShader(int program, int shader);
 
-    ;
-
     @Override
-    public native void glDrawElements(int mode, int count, int type, int offset)
-
-    ;
+    public native void glDisable(int cap);
 
     @Override
-    public native void glDrawElements(int mode, int count, int type, Buffer indices)
+    public native void glDisableVertexAttribArray(int index);
 
-    ;
-
     @Override
-    public native void glEnable(int cap)
+    public native void glDrawArrays(int mode, int first, int count);
 
-    ;
-
     @Override
-    public native void glEnableVertexAttribArray(int index)
-
-    ;
+    public native void glDrawElements(int mode, int count, int type, int offset);
 
     @Override
-    public native void glFinish()
+    public native void glDrawElements(int mode, int count, int type, Buffer indices);
 
-    ;
-
     @Override
-    public native void glFlush()
+    public native void glEnable(int cap);
 
-    ;
-
     @Override
-    public native void glFramebufferRenderbuffer(int target, int attachment, int renderbuffertarget, int renderbuffer)
-
-    ;
+    public native void glEnableVertexAttribArray(int index);
 
     @Override
-    public native void glFramebufferTexture2D(int target, int attachment, int textarget, int texture, int level)
+    public native void glFinish();
 
-    ;
-
     @Override
-    public native void glFrontFace(int mode)
-
-    ;
+    public native void glFlush();
 
     @Override
-    public native void glGenBuffers(int n, int[] buffers, int offset)
+    public native void glFramebufferRenderbuffer(
+            int target, int attachment, int renderbuffertarget, int renderbuffer);
 
-    ;
-
     @Override
-    public native void glGenBuffers(int n, IntBuffer buffers)
+    public native void glFramebufferTexture2D(
+            int target, int attachment, int textarget, int texture, int level);
 
-    ;
-
     @Override
-    public native void glGenerateMipmap(int target)
-
-    ;
+    public native void glFrontFace(int mode);
 
     @Override
-    public native void glGenFramebuffers(int n, int[] framebuffers, int offset)
+    public native void glGenBuffers(int n, int[] buffers, int offset);
 
-    ;
-
     @Override
-    public native void glGenFramebuffers(int n, IntBuffer framebuffers)
+    public native void glGenBuffers(int n, IntBuffer buffers);
 
-    ;
-
     @Override
-    public native void glGenRenderbuffers(int n, int[] renderbuffers, int offset)
-
-    ;
+    public native void glGenerateMipmap(int target);
 
     @Override
-    public native void glGenRenderbuffers(int n, IntBuffer renderbuffers)
+    public native void glGenFramebuffers(int n, int[] framebuffers, int offset);
 
-    ;
-
     @Override
-    public native void glGenTextures(int n, int[] textures, int offset)
+    public native void glGenFramebuffers(int n, IntBuffer framebuffers);
 
-    ;
-
     @Override
-    public native void glGenTextures(int n, IntBuffer textures)
-
-    ;
+    public native void glGenRenderbuffers(int n, int[] renderbuffers, int offset);
 
     @Override
-    public native void glGetActiveAttrib(int program, int index, int bufsize, int[] length, int lengthOffset, int[] size, int sizeOffset, int[] type, int typeOffset, byte[] name, int nameOffset)
+    public native void glGenRenderbuffers(int n, IntBuffer renderbuffers);
 
-    ;
-
     @Override
-    public native void glGetActiveAttrib(int program, int index, int bufsize, IntBuffer length, IntBuffer size, IntBuffer type, byte name)
-
-    ;
+    public native void glGenTextures(int n, int[] textures, int offset);
 
     @Override
-    public native String glGetActiveAttrib(int program, int index, int[] size, int sizeOffset, int[] type, int typeOffset)
-    ;
+    public native void glGenTextures(int n, IntBuffer textures);
 
     @Override
-    public native String glGetActiveAttrib(int program, int index, IntBuffer size, IntBuffer type)
-    ;
+    public native void glGetActiveAttrib(
+            int program,
+            int index,
+            int bufsize,
+            int[] length,
+            int lengthOffset,
+            int[] size,
+            int sizeOffset,
+            int[] type,
+            int typeOffset,
+            byte[] name,
+            int nameOffset);
 
     @Override
-    public native void glGetActiveUniform(int program, int index, int bufsize, int[] length, int lengthOffset, int[] size, int sizeOffset, int[] type, int typeOffset, byte[] name, int nameOffset)
+    public native String glGetActiveAttrib(
+            int program, int index, int[] size, int sizeOffset, int[] type, int typeOffset);
 
-    ;
-
     @Override
-    public native void glGetActiveUniform(int program, int index, int bufsize, IntBuffer length, IntBuffer size, IntBuffer type, byte name)
+    public native String glGetActiveAttrib(int program, int index, IntBuffer size, IntBuffer type);
 
-    ;
-
     @Override
-    public native String glGetActiveUniform(int program, int index, int[] size, int sizeOffset, int[] type, int typeOffset)
-    ;
+    public native void glGetActiveUniform(
+            int program,
+            int index,
+            int bufsize,
+            int[] length,
+            int lengthOffset,
+            int[] size,
+            int sizeOffset,
+            int[] type,
+            int typeOffset,
+            byte[] name,
+            int nameOffset);
 
     @Override
-    public native String glGetActiveUniform(int program, int index, IntBuffer size, IntBuffer type)
-    ;
+    public native String glGetActiveUniform(
+            int program, int index, int[] size, int sizeOffset, int[] type, int typeOffset);
 
     @Override
-    public native void glGetAttachedShaders(int program, int maxcount, int[] count, int countOffset, int[] shaders, int shadersOffset)
-
-    ;
+    public native String glGetActiveUniform(int program, int index, IntBuffer size, IntBuffer type);
 
     @Override
-    public native void glGetAttachedShaders(int program, int maxcount, IntBuffer count, IntBuffer shaders)
+    public native void glGetAttachedShaders(
+            int program,
+            int maxcount,
+            int[] count,
+            int countOffset,
+            int[] shaders,
+            int shadersOffset);
 
-    ;
-
     @Override
-    public native int glGetAttribLocation(int program, String name)
-    ;
+    public native void glGetAttachedShaders(
+            int program, int maxcount, IntBuffer count, IntBuffer shaders);
 
     @Override
-    public native void glGetBooleanv(int pname, boolean[] params, int offset)
+    public native int glGetAttribLocation(int program, String name);
 
-    ;
-
     @Override
-    public native void glGetBooleanv(int pname, IntBuffer params)
-
-    ;
+    public native void glGetBooleanv(int pname, boolean[] params, int offset);
 
     @Override
-    public native void glGetBufferParameteriv(int target, int pname, int[] params, int offset)
+    public native void glGetBooleanv(int pname, IntBuffer params);
 
-    ;
-
     @Override
-    public native void glGetBufferParameteriv(int target, int pname, IntBuffer params)
+    public native void glGetBufferParameteriv(int target, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native int glGetError()
-    ;
+    public native void glGetBufferParameteriv(int target, int pname, IntBuffer params);
 
     @Override
-    public native void glGetFloatv(int pname, float[] params, int offset)
-
-    ;
+    public native int glGetError();
 
     @Override
-    public native void glGetFloatv(int pname, FloatBuffer params)
+    public native void glGetFloatv(int pname, float[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, int[] params, int offset)
+    public native void glGetFloatv(int pname, FloatBuffer params);
 
-    ;
-
     @Override
-    public native void glGetFramebufferAttachmentParameteriv(int target, int attachment, int pname, IntBuffer params)
-
-    ;
+    public native void glGetFramebufferAttachmentParameteriv(
+            int target, int attachment, int pname, int[] params, int offset);
 
     @Override
-    public native void glGetIntegerv(int pname, int[] params, int offset)
+    public native void glGetFramebufferAttachmentParameteriv(
+            int target, int attachment, int pname, IntBuffer params);
 
-    ;
-
     @Override
-    public native void glGetIntegerv(int pname, IntBuffer params)
+    public native void glGetIntegerv(int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetProgramiv(int program, int pname, int[] params, int offset)
-
-    ;
+    public native void glGetIntegerv(int pname, IntBuffer params);
 
     @Override
-    public native void glGetProgramiv(int program, int pname, IntBuffer params)
+    public native void glGetProgramiv(int program, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native String glGetProgramInfoLog(int program)
-    ;
+    public native void glGetProgramiv(int program, int pname, IntBuffer params);
 
     @Override
-    public native void glGetRenderbufferParameteriv(int target, int pname, int[] params, int offset)
+    public native String glGetProgramInfoLog(int program);
 
-    ;
-
     @Override
-    public native void glGetRenderbufferParameteriv(int target, int pname, IntBuffer params)
-
-    ;
+    public native void glGetRenderbufferParameteriv(
+            int target, int pname, int[] params, int offset);
 
     @Override
-    public native void glGetShaderiv(int shader, int pname, int[] params, int offset)
+    public native void glGetRenderbufferParameteriv(int target, int pname, IntBuffer params);
 
-    ;
-
     @Override
-    public native void glGetShaderiv(int shader, int pname, IntBuffer params)
+    public native void glGetShaderiv(int shader, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native String glGetShaderInfoLog(int shader)
-    ;
+    public native void glGetShaderiv(int shader, int pname, IntBuffer params);
 
     @Override
-    public native void glGetShaderPrecisionFormat(int shadertype, int precisiontype, int[] range, int rangeOffset, int[] precision, int precisionOffset)
-
-    ;
+    public native String glGetShaderInfoLog(int shader);
 
     @Override
-    public native void glGetShaderPrecisionFormat(int shadertype, int precisiontype, IntBuffer range, IntBuffer precision)
+    public native void glGetShaderPrecisionFormat(
+            int shadertype,
+            int precisiontype,
+            int[] range,
+            int rangeOffset,
+            int[] precision,
+            int precisionOffset);
 
-    ;
-
     @Override
-    public native void glGetShaderSource(int shader, int bufsize, int[] length, int lengthOffset, byte[] source, int sourceOffset)
-
-    ;
+    public native void glGetShaderPrecisionFormat(
+            int shadertype, int precisiontype, IntBuffer range, IntBuffer precision);
 
     @Override
-    public native void glGetShaderSource(int shader, int bufsize, IntBuffer length, byte source)
+    public native void glGetShaderSource(
+            int shader,
+            int bufsize,
+            int[] length,
+            int lengthOffset,
+            byte[] source,
+            int sourceOffset);
 
-    ;
-
     @Override
-    public native String glGetShaderSource(int shader)
-    ;
+    public native String glGetShaderSource(int shader);
 
     @Override
-    public native String glGetString(int name)
-    ;
+    public native String glGetString(int name);
 
     @Override
-    public native void glGetTexParameterfv(int target, int pname, float[] params, int offset)
+    public native void glGetTexParameterfv(int target, int pname, float[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetTexParameterfv(int target, int pname, FloatBuffer params)
-
-    ;
+    public native void glGetTexParameterfv(int target, int pname, FloatBuffer params);
 
     @Override
-    public native void glGetTexParameteriv(int target, int pname, int[] params, int offset)
+    public native void glGetTexParameteriv(int target, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetTexParameteriv(int target, int pname, IntBuffer params)
+    public native void glGetTexParameteriv(int target, int pname, IntBuffer params);
 
-    ;
-
     @Override
-    public native void glGetUniformfv(int program, int location, float[] params, int offset)
-
-    ;
+    public native void glGetUniformfv(int program, int location, float[] params, int offset);
 
     @Override
-    public native void glGetUniformfv(int program, int location, FloatBuffer params)
+    public native void glGetUniformfv(int program, int location, FloatBuffer params);
 
-    ;
-
     @Override
-    public native void glGetUniformiv(int program, int location, int[] params, int offset)
+    public native void glGetUniformiv(int program, int location, int[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetUniformiv(int program, int location, IntBuffer params)
-
-    ;
+    public native void glGetUniformiv(int program, int location, IntBuffer params);
 
     @Override
-    public native int glGetUniformLocation(int program, String name)
-    ;
+    public native int glGetUniformLocation(int program, String name);
 
     @Override
-    public native void glGetVertexAttribfv(int index, int pname, float[] params, int offset)
+    public native void glGetVertexAttribfv(int index, int pname, float[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetVertexAttribfv(int index, int pname, FloatBuffer params)
-
-    ;
+    public native void glGetVertexAttribfv(int index, int pname, FloatBuffer params);
 
     @Override
-    public native void glGetVertexAttribiv(int index, int pname, int[] params, int offset)
+    public native void glGetVertexAttribiv(int index, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native void glGetVertexAttribiv(int index, int pname, IntBuffer params)
+    public native void glGetVertexAttribiv(int index, int pname, IntBuffer params);
 
-    ;
-
     @Override
-    public native void glHint(int target, int mode)
-
-    ;
+    public native void glHint(int target, int mode);
 
     @Override
-    public native boolean glIsBuffer(int buffer)
-    ;
+    public native boolean glIsBuffer(int buffer);
 
     @Override
-    public native boolean glIsEnabled(int cap)
-    ;
+    public native boolean glIsEnabled(int cap);
 
     @Override
-    public native boolean glIsFramebuffer(int framebuffer)
-    ;
+    public native boolean glIsFramebuffer(int framebuffer);
 
     @Override
-    public native boolean glIsProgram(int program)
-    ;
+    public native boolean glIsProgram(int program);
 
     @Override
-    public native boolean glIsRenderbuffer(int renderbuffer)
-    ;
+    public native boolean glIsRenderbuffer(int renderbuffer);
 
     @Override
-    public native boolean glIsShader(int shader)
-    ;
+    public native boolean glIsShader(int shader);
 
     @Override
-    public native boolean glIsTexture(int texture)
-    ;
+    public native boolean glIsTexture(int texture);
 
     @Override
-    public native void glLineWidth(float width)
+    public native void glLineWidth(float width);
 
-    ;
-
     @Override
-    public native void glLinkProgram(int program)
+    public native void glLinkProgram(int program);
 
-    ;
-
     @Override
-    public native void glPixelStorei(int pname, int param)
-
-    ;
+    public native void glPixelStorei(int pname, int param);
 
     @Override
-    public native void glPolygonOffset(float factor, float units)
+    public native void glPolygonOffset(float factor, float units);
 
-    ;
-
     @Override
-    public native void glReadPixels(int x, int y, int width, int height, int format, int type, Buffer pixels)
+    public native void glReadPixels(
+            int x, int y, int width, int height, int format, int type, Buffer pixels);
 
-    ;
-
     @Override
-    public native void glReleaseShaderCompiler()
-
-    ;
+    public native void glReleaseShaderCompiler();
 
     @Override
-    public native void glRenderbufferStorage(int target, int internalformat, int width, int height)
+    public native void glRenderbufferStorage(int target, int internalformat, int width, int height);
 
-    ;
-
     @Override
-    public native void glSampleCoverage(float value, boolean invert)
-
-    ;
+    public native void glSampleCoverage(float value, boolean invert);
 
     @Override
-    public native void glScissor(int x, int y, int width, int height)
+    public native void glScissor(int x, int y, int width, int height);
 
-    ;
-
     @Override
-    public native void glShaderBinary(int n, int[] shaders, int offset, int binaryformat, Buffer binary, int length)
+    public native void glShaderBinary(
+            int n, int[] shaders, int offset, int binaryformat, Buffer binary, int length);
 
-    ;
-
     @Override
-    public native void glShaderBinary(int n, IntBuffer shaders, int binaryformat, Buffer binary, int length)
-
-    ;
+    public native void glShaderBinary(
+            int n, IntBuffer shaders, int binaryformat, Buffer binary, int length);
 
     @Override
-    public native void glShaderSource(int shader, String string)
+    public native void glShaderSource(int shader, String string);
 
-    ;
-
     @Override
-    public native void glStencilFunc(int func, int ref, int mask)
+    public native void glStencilFunc(int func, int ref, int mask);
 
-    ;
-
     @Override
-    public native void glStencilFuncSeparate(int face, int func, int ref, int mask)
-
-    ;
+    public native void glStencilFuncSeparate(int face, int func, int ref, int mask);
 
     @Override
-    public native void glStencilMask(int mask)
+    public native void glStencilMask(int mask);
 
-    ;
-
     @Override
-    public native void glStencilMaskSeparate(int face, int mask)
+    public native void glStencilMaskSeparate(int face, int mask);
 
-    ;
-
     @Override
-    public native void glStencilOp(int fail, int zfail, int zpass)
-
-    ;
+    public native void glStencilOp(int fail, int zfail, int zpass);
 
     @Override
-    public native void glStencilOpSeparate(int face, int fail, int zfail, int zpass)
+    public native void glStencilOpSeparate(int face, int fail, int zfail, int zpass);
 
-    ;
-
     @Override
-    public native void glTexImage2D(int target, int level, int internalformat, int width, int height, int border, int format, int type, Buffer pixels)
-
-    ;
+    public native void glTexImage2D(
+            int target,
+            int level,
+            int internalformat,
+            int width,
+            int height,
+            int border,
+            int format,
+            int type,
+            Buffer pixels);
 
     @Override
-    public native void glTexParameterf(int target, int pname, float param)
+    public native void glTexParameterf(int target, int pname, float param);
 
-    ;
-
     @Override
-    public native void glTexParameterfv(int target, int pname, float[] params, int offset)
+    public native void glTexParameterfv(int target, int pname, float[] params, int offset);
 
-    ;
-
     @Override
-    public native void glTexParameterfv(int target, int pname, FloatBuffer params)
-
-    ;
+    public native void glTexParameterfv(int target, int pname, FloatBuffer params);
 
     @Override
-    public native void glTexParameteri(int target, int pname, int param)
+    public native void glTexParameteri(int target, int pname, int param);
 
-    ;
-
     @Override
-    public native void glTexParameteriv(int target, int pname, int[] params, int offset)
+    public native void glTexParameteriv(int target, int pname, int[] params, int offset);
 
-    ;
-
     @Override
-    public native void glTexParameteriv(int target, int pname, IntBuffer params)
-
-    ;
+    public native void glTexParameteriv(int target, int pname, IntBuffer params);
 
     @Override
-    public native void glTexSubImage2D(int target, int level, int xoffset, int yoffset, int width, int height, int format, int type, Buffer pixels)
+    public native void glTexSubImage2D(
+            int target,
+            int level,
+            int xoffset,
+            int yoffset,
+            int width,
+            int height,
+            int format,
+            int type,
+            Buffer pixels);
 
-    ;
-
     @Override
-    public native void glUniform1f(int location, float x)
+    public native void glUniform1f(int location, float x);
 
-    ;
-
     @Override
-    public native void glUniform1fv(int location, int count, float[] v, int offset)
-
-    ;
+    public native void glUniform1fv(int location, int count, float[] v, int offset);
 
     @Override
-    public native void glUniform1fv(int location, int count, FloatBuffer v)
+    public native void glUniform1fv(int location, int count, FloatBuffer v);
 
-    ;
-
     @Override
-    public native void glUniform1i(int location, int x)
-
-    ;
+    public native void glUniform1i(int location, int x);
 
     @Override
-    public native void glUniform1iv(int location, int count, int[] v, int offset)
+    public native void glUniform1iv(int location, int count, int[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform1iv(int location, int count, IntBuffer v)
+    public native void glUniform1iv(int location, int count, IntBuffer v);
 
-    ;
-
     @Override
-    public native void glUniform2f(int location, float x, float y)
-
-    ;
+    public native void glUniform2f(int location, float x, float y);
 
     @Override
-    public native void glUniform2fv(int location, int count, float[] v, int offset)
+    public native void glUniform2fv(int location, int count, float[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform2fv(int location, int count, FloatBuffer v)
+    public native void glUniform2fv(int location, int count, FloatBuffer v);
 
-    ;
-
     @Override
-    public native void glUniform2i(int location, int x, int y)
-
-    ;
+    public native void glUniform2i(int location, int x, int y);
 
     @Override
-    public native void glUniform2iv(int location, int count, int[] v, int offset)
+    public native void glUniform2iv(int location, int count, int[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform2iv(int location, int count, IntBuffer v)
+    public native void glUniform2iv(int location, int count, IntBuffer v);
 
-    ;
-
     @Override
-    public native void glUniform3f(int location, float x, float y, float z)
-
-    ;
+    public native void glUniform3f(int location, float x, float y, float z);
 
     @Override
-    public native void glUniform3fv(int location, int count, float[] v, int offset)
+    public native void glUniform3fv(int location, int count, float[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform3fv(int location, int count, FloatBuffer v)
-
-    ;
+    public native void glUniform3fv(int location, int count, FloatBuffer v);
 
     @Override
-    public native void glUniform3i(int location, int x, int y, int z)
+    public native void glUniform3i(int location, int x, int y, int z);
 
-    ;
-
     @Override
-    public native void glUniform3iv(int location, int count, int[] v, int offset)
+    public native void glUniform3iv(int location, int count, int[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform3iv(int location, int count, IntBuffer v)
-
-    ;
+    public native void glUniform3iv(int location, int count, IntBuffer v);
 
     @Override
-    public native void glUniform4f(int location, float x, float y, float z, float w)
+    public native void glUniform4f(int location, float x, float y, float z, float w);
 
-    ;
-
     @Override
-    public native void glUniform4fv(int location, int count, float[] v, int offset)
+    public native void glUniform4fv(int location, int count, float[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform4fv(int location, int count, FloatBuffer v)
-
-    ;
+    public native void glUniform4fv(int location, int count, FloatBuffer v);
 
     @Override
-    public native void glUniform4i(int location, int x, int y, int z, int w)
+    public native void glUniform4i(int location, int x, int y, int z, int w);
 
-    ;
-
     @Override
-    public native void glUniform4iv(int location, int count, int[] v, int offset)
+    public native void glUniform4iv(int location, int count, int[] v, int offset);
 
-    ;
-
     @Override
-    public native void glUniform4iv(int location, int count, IntBuffer v)
-
-    ;
+    public native void glUniform4iv(int location, int count, IntBuffer v);
 
     @Override
-    public native void glUniformMatrix2fv(int location, int count, boolean transpose, float[] value, int offset)
+    public native void glUniformMatrix2fv(
+            int location, int count, boolean transpose, float[] value, int offset);
 
-    ;
-
     @Override
-    public native void glUniformMatrix2fv(int location, int count, boolean transpose, FloatBuffer value)
-
-    ;
+    public native void glUniformMatrix2fv(
+            int location, int count, boolean transpose, FloatBuffer value);
 
     @Override
-    public native void glUniformMatrix3fv(int location, int count, boolean transpose, float[] value, int offset)
+    public native void glUniformMatrix3fv(
+            int location, int count, boolean transpose, float[] value, int offset);
 
-    ;
-
     @Override
-    public native void glUniformMatrix3fv(int location, int count, boolean transpose, FloatBuffer value)
+    public native void glUniformMatrix3fv(
+            int location, int count, boolean transpose, FloatBuffer value);
 
-    ;
-
     @Override
-    public native void glUniformMatrix4fv(int location, int count, boolean transpose, float[] value, int offset)
-
-    ;
+    public native void glUniformMatrix4fv(
+            int location, int count, boolean transpose, float[] value, int offset);
 
     @Override
-    public native void glUniformMatrix4fv(int location, int count, boolean transpose, FloatBuffer value)
+    public native void glUniformMatrix4fv(
+            int location, int count, boolean transpose, FloatBuffer value);
 
-    ;
-
     @Override
-    public native void glUseProgram(int program)
+    public native void glUseProgram(int program);
 
-    ;
-
     @Override
-    public native void glValidateProgram(int program)
-
-    ;
+    public native void glValidateProgram(int program);
 
     @Override
-    public native void glVertexAttrib1f(int indx, float x)
+    public native void glVertexAttrib1f(int indx, float x);
 
-    ;
-
     @Override
-    public native void glVertexAttrib1fv(int indx, float[] values, int offset)
+    public native void glVertexAttrib1fv(int indx, float[] values, int offset);
 
-    ;
-
     @Override
-    public native void glVertexAttrib1fv(int indx, FloatBuffer values)
-
-    ;
+    public native void glVertexAttrib1fv(int indx, FloatBuffer values);
 
     @Override
-    public native void glVertexAttrib2f(int indx, float x, float y)
+    public native void glVertexAttrib2f(int indx, float x, float y);
 
-    ;
-
     @Override
-    public native void glVertexAttrib2fv(int indx, float[] values, int offset)
+    public native void glVertexAttrib2fv(int indx, float[] values, int offset);
 
-    ;
-
     @Override
-    public native void glVertexAttrib2fv(int indx, FloatBuffer values)
-
-    ;
+    public native void glVertexAttrib2fv(int indx, FloatBuffer values);
 
     @Override
-    public native void glVertexAttrib3f(int indx, float x, float y, float z)
+    public native void glVertexAttrib3f(int indx, float x, float y, float z);
 
-    ;
-
     @Override
-    public native void glVertexAttrib3fv(int indx, float[] values, int offset)
+    public native void glVertexAttrib3fv(int indx, float[] values, int offset);
 
-    ;
-
     @Override
-    public native void glVertexAttrib3fv(int indx, FloatBuffer values)
-
-    ;
+    public native void glVertexAttrib3fv(int indx, FloatBuffer values);
 
     @Override
-    public native void glVertexAttrib4f(int indx, float x, float y, float z, float w)
+    public native void glVertexAttrib4f(int indx, float x, float y, float z, float w);
 
-    ;
-
     @Override
-    public native void glVertexAttrib4fv(int indx, float[] values, int offset)
+    public native void glVertexAttrib4fv(int indx, float[] values, int offset);
 
-    ;
-
     @Override
-    public native void glVertexAttrib4fv(int indx, FloatBuffer values)
-
-    ;
+    public native void glVertexAttrib4fv(int indx, FloatBuffer values);
 
     @Override
-    public native void glVertexAttribPointer(int indx, int size, int type, boolean normalized, int stride, int offset)
+    public native void glVertexAttribPointer(
+            int indx, int size, int type, boolean normalized, int stride, int offset);
 
-    ;
-
     @Override
-    public native void glVertexAttribPointerBounds(int indx, int size, int type, boolean normalized, int stride, Buffer ptr, int remaining)
+    public native void glVertexAttribPointer(
+            int indx, int size, int type, boolean normalized, int stride, java.nio.Buffer ptr);
 
-    ;
-
     @Override
-    public native void glViewport(int x, int y, int width, int height) 
-
-    ;
-        }
+    public native void glViewport(int x, int y, int width, int height);
+}

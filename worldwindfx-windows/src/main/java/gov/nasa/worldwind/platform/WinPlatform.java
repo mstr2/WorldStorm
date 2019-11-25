@@ -4,10 +4,6 @@ import gov.nasa.worldwind.platform.data.SQLiteDatabase;
 
 public class WinPlatform implements PlatformImpl {
 
-    static {
-        System.load("worldwindFX-windows-native");
-    }
-
     private final GLES20Impl gl = new GLES20Impl();
     private final EGLInterface egl = new EGLInterface();
 
@@ -32,5 +28,4 @@ public class WinPlatform implements PlatformImpl {
         // TODO
         return null;
     }
-
 }
