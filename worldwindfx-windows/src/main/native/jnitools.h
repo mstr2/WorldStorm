@@ -342,8 +342,13 @@ class BoolBuffer
 
 public:
 	BoolBuffer(JNIEnv* env, jbooleanArray array, jint offset) :
-		env_(env), array_(array), elements_(env->GetBooleanArrayElements(array, false)), offset_(offset)
+		env_(env), array_(array), offset_(offset)
 	{
+		if (array != nullptr)
+		{
+			elements_ = env->GetBooleanArrayElements(array, nullptr);
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -351,8 +356,13 @@ public:
 	}
 
 	BoolBuffer(JNIEnv* env, jobject buffer) :
-		env_(env), elements_(reinterpret_cast<jboolean*>(env->GetDirectBufferAddress(buffer)))
+		env_(env)
 	{
+		if (buffer != nullptr)
+		{
+			elements_ = reinterpret_cast<jboolean*>(env->GetDirectBufferAddress(buffer));
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -371,12 +381,12 @@ public:
 
 	operator const unsigned char*() const
 	{
-		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(elements_ + offset_) : nullptr;
+		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator unsigned char*()
 	{
-		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(elements_ + offset_) : nullptr;
+		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(&elements_[offset_]) : nullptr;
 	}
 
 private:
