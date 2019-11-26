@@ -21,7 +21,7 @@ import gov.nasa.worldwind.geom.Location;
 import gov.nasa.worldwind.geom.Matrix3;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.ImageOptions;
@@ -186,7 +186,7 @@ public class Path extends AbstractShape {
             int size = this.vertexArray.size() * 4;
             FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
             buffer.put(this.vertexArray.array(), 0, this.vertexArray.size());
-            drawState.vertexBuffer = new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer.rewind());
+            drawState.vertexBuffer = new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer.rewind());
             rc.putBufferObject(this.vertexBufferKey, drawState.vertexBuffer);
         }
 
@@ -198,7 +198,7 @@ public class Path extends AbstractShape {
             buffer.put(this.interiorElements.array(), 0, this.interiorElements.size());
             buffer.put(this.outlineElements.array(), 0, this.outlineElements.size());
             buffer.put(this.verticalElements.array(), 0, this.verticalElements.size());
-            drawState.elementBuffer = new BufferObject(GL.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
+            drawState.elementBuffer = new BufferObject(GLES20.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
             rc.putBufferObject(this.elementBufferKey, drawState.elementBuffer);
         }
 
@@ -224,8 +224,8 @@ public class Path extends AbstractShape {
         if (this.activeAttributes.drawOutline) {
             drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.outlineColor);
             drawState.lineWidth(this.isSurfaceShape ? this.activeAttributes.outlineWidth + 0.5f : this.activeAttributes.outlineWidth);
-            drawState.drawElements(GL.GL_LINE_STRIP, this.outlineElements.size(),
-                GL.GL_UNSIGNED_SHORT, this.interiorElements.size() * 2);
+            drawState.drawElements(GLES20.GL_LINE_STRIP, this.outlineElements.size(),
+                GLES20.GL_UNSIGNED_SHORT, this.interiorElements.size() * 2);
         }
 
         // Disable texturing for the remaining drawable primitives.
@@ -235,15 +235,15 @@ public class Path extends AbstractShape {
         if (this.activeAttributes.drawOutline && this.activeAttributes.drawVerticals && this.extrude) {
             drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.outlineColor);
             drawState.lineWidth(this.activeAttributes.outlineWidth);
-            drawState.drawElements(GL.GL_LINES, this.verticalElements.size(),
-                GL.GL_UNSIGNED_SHORT, (this.interiorElements.size() * 2) + (this.outlineElements.size() * 2));
+            drawState.drawElements(GLES20.GL_LINES, this.verticalElements.size(),
+                GLES20.GL_UNSIGNED_SHORT, (this.interiorElements.size() * 2) + (this.outlineElements.size() * 2));
         }
 
         // Configure the drawable to display the shape's extruded interior.
         if (this.activeAttributes.drawInterior && this.extrude) {
             drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.interiorColor);
-            drawState.drawElements(GL.GL_TRIANGLE_STRIP, this.interiorElements.size(),
-                GL.GL_UNSIGNED_SHORT, 0);
+            drawState.drawElements(GLES20.GL_TRIANGLE_STRIP, this.interiorElements.size(),
+                GLES20.GL_UNSIGNED_SHORT, 0);
         }
 
         // Configure the drawable according to the shape's attributes.

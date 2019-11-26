@@ -12,7 +12,7 @@ import gov.nasa.worldwind.draw.Drawable;
 import gov.nasa.worldwind.draw.DrawableSurfaceColor;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.Color;
@@ -83,7 +83,7 @@ public class BasicFrameController implements FrameController {
     }
 
     protected void clearFrame(DrawContext dc) {
-        Platform.getGL().glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
+        Platform.getGL().glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
     }
 
     protected void drawDrawables(DrawContext dc) {

@@ -4,9 +4,9 @@ import gov.nasa.worldwind.platform.data.SQLiteDatabase;
 
 interface PlatformImpl {
 
-    GL getGL();
+    GLES20 getGL();
 
-    EGL getEGL();
+    EGL14 getEGL();
 
     SystemInfo getSystemInfo();
 

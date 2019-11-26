@@ -7,7 +7,7 @@ package gov.nasa.worldwind.draw;
 
 import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.Color;
 import gov.nasa.worldwind.render.Framebuffer;
@@ -97,7 +97,7 @@ public class DrawableSightline implements Drawable {
     }
 
     protected boolean drawSceneDepth(DrawContext dc) {
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         try {
             Framebuffer framebuffer = dc.scratchFramebuffer();
@@ -106,13 +106,13 @@ public class DrawableSightline implements Drawable {
             }
 
             // Clear the framebuffer.
-            Texture depthTexture = framebuffer.getAttachedTexture(GL.GL_DEPTH_ATTACHMENT);
+            Texture depthTexture = framebuffer.getAttachedTexture(GLES20.GL_DEPTH_ATTACHMENT);
             gl.glViewport(0, 0, depthTexture.getWidth(), depthTexture.getHeight());
-            gl.glClear(GL.GL_DEPTH_BUFFER_BIT);
+            gl.glClear(GLES20.GL_DEPTH_BUFFER_BIT);
 
             // Draw only depth values offset slightly away from the viewer.
             gl.glColorMask(false, false, false, false);
-            gl.glEnable(GL.GL_POLYGON_OFFSET_FILL);
+            gl.glEnable(GLES20.GL_POLYGON_OFFSET_FILL);
             gl.glPolygonOffset(4, 4);
 
             for (int idx = 0, len = dc.getDrawableTerrainCount(); idx < len; idx++) {
@@ -138,7 +138,7 @@ public class DrawableSightline implements Drawable {
             dc.bindFramebuffer(0);
             gl.glViewport(dc.viewport.x, dc.viewport.y, dc.viewport.width, dc.viewport.height);
             gl.glColorMask(true, true, true, true);
-            gl.glDisable(GL.GL_POLYGON_OFFSET_FILL);
+            gl.glDisable(GLES20.GL_POLYGON_OFFSET_FILL);
             gl.glPolygonOffset(0, 0);
         }
 
@@ -147,9 +147,9 @@ public class DrawableSightline implements Drawable {
 
     protected void drawSceneOcclusion(DrawContext dc) {
         // Make multi-texture unit 0 active.
-        dc.activeTextureUnit(GL.GL_TEXTURE0);
+        dc.activeTextureUnit(GLES20.GL_TEXTURE0);
 
-        Texture depthTexture = dc.scratchFramebuffer().getAttachedTexture(GL.GL_DEPTH_ATTACHMENT);
+        Texture depthTexture = dc.scratchFramebuffer().getAttachedTexture(GLES20.GL_DEPTH_ATTACHMENT);
         if (!depthTexture.bindTexture(dc)) {
             return; // framebuffer texture failed to bind
         }

@@ -18,7 +18,7 @@ import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Vec2;
 import gov.nasa.worldwind.geom.Vec3;
 import gov.nasa.worldwind.geom.Viewport;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.Color;
@@ -57,7 +57,7 @@ public class DrawContext {
 
     private int programId;
 
-    private int textureUnit = GL.GL_TEXTURE0;
+    private int textureUnit = GLES20.GL_TEXTURE0;
 
     private int[] textureId = new int[32];
 
@@ -100,7 +100,7 @@ public class DrawContext {
         // Clear objects and values associated with the current OpenGL context.
         this.framebufferId = 0;
         this.programId = 0;
-        this.textureUnit = GL.GL_TEXTURE0;
+        this.textureUnit = GLES20.GL_TEXTURE0;
         this.arrayBufferId = 0;
         this.elementArrayBufferId = 0;
         this.scratchFramebuffer = null;
@@ -151,7 +151,7 @@ public class DrawContext {
     public void bindFramebuffer(int framebufferId) {
         if (this.framebufferId != framebufferId) {
             this.framebufferId = framebufferId;
-            Platform.getGL().glBindFramebuffer(GL.GL_FRAMEBUFFER, framebufferId);
+            Platform.getGL().glBindFramebuffer(GLES20.GL_FRAMEBUFFER, framebufferId);
         }
     }
 
@@ -174,13 +174,13 @@ public class DrawContext {
         }
 
         Framebuffer framebuffer = new Framebuffer();
-        Texture colorAttachment = new Texture(1024, 1024, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE);
-        Texture depthAttachment = new Texture(1024, 1024, GL.GL_DEPTH_COMPONENT, GL.GL_UNSIGNED_SHORT);
+        Texture colorAttachment = new Texture(1024, 1024, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE);
+        Texture depthAttachment = new Texture(1024, 1024, GLES20.GL_DEPTH_COMPONENT, GLES20.GL_UNSIGNED_SHORT);
         // TODO consider modifying Texture's tex parameter behavior in order to make this unnecessary
-        depthAttachment.setTexParameter(GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
-        depthAttachment.setTexParameter(GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
-        framebuffer.attachTexture(this, colorAttachment, GL.GL_COLOR_ATTACHMENT0);
-        framebuffer.attachTexture(this, depthAttachment, GL.GL_DEPTH_ATTACHMENT);
+        depthAttachment.setTexParameter(GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        depthAttachment.setTexParameter(GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
+        framebuffer.attachTexture(this, colorAttachment, GLES20.GL_COLOR_ATTACHMENT0);
+        framebuffer.attachTexture(this, depthAttachment, GLES20.GL_DEPTH_ATTACHMENT);
 
         return (this.scratchFramebuffer = framebuffer);
     }
@@ -237,7 +237,7 @@ public class DrawContext {
      * @return the currently bound texture 2D object, or 0 if no texture object is bound
      */
     public int currentTexture() {
-        int textureUnitIndex = this.textureUnit - GL.GL_TEXTURE0;
+        int textureUnitIndex = this.textureUnit - GLES20.GL_TEXTURE0;
         return this.textureId[textureUnitIndex];
     }
 
@@ -249,7 +249,7 @@ public class DrawContext {
      * @return the currently bound texture 2D object, or 0 if no texture object is bound
      */
     public int currentTexture(int textureUnit) {
-        int textureUnitIndex = textureUnit - GL.GL_TEXTURE0;
+        int textureUnitIndex = textureUnit - GLES20.GL_TEXTURE0;
         return this.textureId[textureUnitIndex];
     }
 
@@ -260,10 +260,10 @@ public class DrawContext {
      * @param textureId the name of the OpenGL texture 2D object to make active, or 0 to make no texture active
      */
     public void bindTexture(int textureId) {
-        int textureUnitIndex = this.textureUnit - GL.GL_TEXTURE0;
+        int textureUnitIndex = this.textureUnit - GLES20.GL_TEXTURE0;
         if (this.textureId[textureUnitIndex] != textureId) {
             this.textureId[textureUnitIndex] = textureId;
-            Platform.getGL().glBindTexture(GL.GL_TEXTURE_2D, textureId);
+            Platform.getGL().glBindTexture(GLES20.GL_TEXTURE_2D, textureId);
         }
     }
 
@@ -275,9 +275,9 @@ public class DrawContext {
      * @return the currently bound buffer object, or 0 if no buffer object is bound
      */
     public int currentBuffer(int target) {
-        if (target == GL.GL_ARRAY_BUFFER) {
+        if (target == GLES20.GL_ARRAY_BUFFER) {
             return this.arrayBufferId;
-        } else if (target == GL.GL_ELEMENT_ARRAY_BUFFER) {
+        } else if (target == GLES20.GL_ELEMENT_ARRAY_BUFFER) {
             return this.elementArrayBufferId;
         } else {
             return 0;
@@ -292,10 +292,10 @@ public class DrawContext {
      * @param bufferId the name of the OpenGL buffer object to make active
      */
     public void bindBuffer(int target, int bufferId) {
-        if (target == GL.GL_ARRAY_BUFFER && this.arrayBufferId != bufferId) {
+        if (target == GLES20.GL_ARRAY_BUFFER && this.arrayBufferId != bufferId) {
             this.arrayBufferId = bufferId;
             Platform.getGL().glBindBuffer(target, bufferId);
-        } else if (target == GL.GL_ELEMENT_ARRAY_BUFFER && this.elementArrayBufferId != bufferId) {
+        } else if (target == GLES20.GL_ELEMENT_ARRAY_BUFFER && this.elementArrayBufferId != bufferId) {
             this.elementArrayBufferId = bufferId;
             Platform.getGL().glBindBuffer(target, bufferId);
         } else {
@@ -328,7 +328,7 @@ public class DrawContext {
         FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
         buffer.put(points).rewind();
 
-        BufferObject bufferObject = new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer);
+        BufferObject bufferObject = new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer);
 
         return (this.unitSquareBuffer = bufferObject);
     }
@@ -351,7 +351,7 @@ public class DrawContext {
 
         // Read the fragment pixel as an RGBA 8888 color.
         ByteBuffer pixelBuffer = (ByteBuffer) this.scratchBuffer(4).clear();
-        Platform.getGL().glReadPixels(x, y, 1, 1, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, pixelBuffer);
+        Platform.getGL().glReadPixels(x, y, 1, 1, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, pixelBuffer);
         pixelBuffer.get(this.pixelArray, 0, 4);
 
         // Convert the RGBA 8888 color to a WorldWind color.
@@ -378,7 +378,7 @@ public class DrawContext {
         // Read the fragment pixels as a tightly packed array of RGBA 8888 colors.
         int pixelCount = width * height;
         ByteBuffer pixelBuffer = (ByteBuffer) this.scratchBuffer(pixelCount * 4).clear();
-        Platform.getGL().glReadPixels(x, y, width, height, GL.GL_RGBA, GL.GL_UNSIGNED_BYTE, pixelBuffer);
+        Platform.getGL().glReadPixels(x, y, width, height, GLES20.GL_RGBA, GLES20.GL_UNSIGNED_BYTE, pixelBuffer);
 
         HashSet<Color> resultSet = new HashSet<>();
         Color result = new Color();

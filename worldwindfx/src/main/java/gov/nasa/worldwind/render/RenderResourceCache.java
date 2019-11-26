@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 
 import gov.nasa.worldwind.WorldWind;
 import gov.nasa.worldwind.draw.DrawContext;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.Handler;
 import gov.nasa.worldwind.Message;
 import gov.nasa.worldwind.platform.SystemInfo;
@@ -159,13 +159,13 @@ public class RenderResourceCache extends LruMemoryCache<Object, RenderResource>
         Texture texture = new Texture(bitmap);
 
         if (options != null && options.resamplingMode == WorldWind.NEAREST_NEIGHBOR) {
-            texture.setTexParameter(GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
-            texture.setTexParameter(GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
+            texture.setTexParameter(GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+            texture.setTexParameter(GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
         }
 
         if (options != null && options.wrapMode == WorldWind.REPEAT) {
-            texture.setTexParameter(GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
-            texture.setTexParameter(GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+            texture.setTexParameter(GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_REPEAT);
+            texture.setTexParameter(GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_REPEAT);
         }
 
         return texture;

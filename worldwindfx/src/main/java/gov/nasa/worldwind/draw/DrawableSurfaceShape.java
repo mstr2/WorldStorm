@@ -11,7 +11,7 @@ import gov.nasa.worldwind.geom.Matrix3;
 import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.Color;
 import gov.nasa.worldwind.render.Framebuffer;
@@ -62,10 +62,10 @@ public class DrawableSurfaceShape implements Drawable {
             return; // program unspecified or failed to build
         }
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Make multi-texture unit 0 active.
-        dc.activeTextureUnit(GL.GL_TEXTURE0);
+        dc.activeTextureUnit(GLES20.GL_TEXTURE0);
 
         // Set up to use vertex tex coord attributes.
         gl.glEnableVertexAttribArray(1 /*vertexTexCoord*/); // only vertexPoint is enabled by default
@@ -112,7 +112,7 @@ public class DrawableSurfaceShape implements Drawable {
         // Keep track of the number of shapes drawn into the texture.
         int shapeCount = 0;
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         try {
             Framebuffer framebuffer = dc.scratchFramebuffer();
@@ -121,10 +121,10 @@ public class DrawableSurfaceShape implements Drawable {
             }
 
             // Clear the framebuffer and disable the depth test.
-            Texture colorAttachment = framebuffer.getAttachedTexture(GL.GL_COLOR_ATTACHMENT0);
+            Texture colorAttachment = framebuffer.getAttachedTexture(GLES20.GL_COLOR_ATTACHMENT0);
             gl.glViewport(0, 0, colorAttachment.getWidth(), colorAttachment.getHeight());
-            gl.glClear(GL.GL_COLOR_BUFFER_BIT);
-            gl.glDisable(GL.GL_DEPTH_TEST);
+            gl.glClear(GLES20.GL_COLOR_BUFFER_BIT);
+            gl.glDisable(GLES20.GL_DEPTH_TEST);
 
             // Use the draw context's pick mode.
             this.drawState.program.enablePickMode(dc.pickMode);
@@ -159,7 +159,7 @@ public class DrawableSurfaceShape implements Drawable {
                 this.drawState.program.loadModelviewProjection(this.mvpMatrix);
 
                 // Use the shape's vertex point attribute.
-                gl.glVertexAttribPointer(0 /*vertexPoint*/, 3, GL.GL_FLOAT, false, shape.drawState.vertexStride, 0);
+                gl.glVertexAttribPointer(0 /*vertexPoint*/, 3, GLES20.GL_FLOAT, false, shape.drawState.vertexStride, 0);
 
                 // Draw the specified primitives to the framebuffer texture.
                 for (int primIdx = 0; primIdx < shape.drawState.primCount; primIdx++) {
@@ -173,7 +173,7 @@ public class DrawableSurfaceShape implements Drawable {
                         this.drawState.program.enableTexture(false);
                     }
 
-                    gl.glVertexAttribPointer(1 /*vertexTexCoord*/, prim.texCoordAttrib.size, GL.GL_FLOAT, false, shape.drawState.vertexStride, prim.texCoordAttrib.offset);
+                    gl.glVertexAttribPointer(1 /*vertexTexCoord*/, prim.texCoordAttrib.size, GLES20.GL_FLOAT, false, shape.drawState.vertexStride, prim.texCoordAttrib.offset);
                     gl.glLineWidth(prim.lineWidth);
                     gl.glDrawElements(prim.mode, prim.count, prim.type, prim.offset);
                 }
@@ -185,7 +185,7 @@ public class DrawableSurfaceShape implements Drawable {
             // Restore the default WorldWind OpenGL state.
             dc.bindFramebuffer(0);
             gl.glViewport(dc.viewport.x, dc.viewport.y, dc.viewport.width, dc.viewport.height);
-            gl.glEnable(GL.GL_DEPTH_TEST);
+            gl.glEnable(GLES20.GL_DEPTH_TEST);
             gl.glLineWidth(1);
         }
 
@@ -201,7 +201,7 @@ public class DrawableSurfaceShape implements Drawable {
             return; // terrain vertex attribute failed to bind
         }
 
-        Texture colorAttachment = dc.scratchFramebuffer().getAttachedTexture(GL.GL_COLOR_ATTACHMENT0);
+        Texture colorAttachment = dc.scratchFramebuffer().getAttachedTexture(GLES20.GL_COLOR_ATTACHMENT0);
         if (!colorAttachment.bindTexture(dc)) {
             return; // framebuffer texture failed to bind
         }

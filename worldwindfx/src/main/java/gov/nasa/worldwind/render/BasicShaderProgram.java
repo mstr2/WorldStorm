@@ -8,10 +8,9 @@ package gov.nasa.worldwind.render;
 import gov.nasa.worldwind.draw.DrawContext;
 import gov.nasa.worldwind.geom.Matrix3;
 import gov.nasa.worldwind.geom.Matrix4;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.util.Logger;
-import gov.nasa.worldwind.util.WWUtil;
 
 import java.util.ResourceBundle;
 
@@ -55,7 +54,7 @@ public class BasicShaderProgram extends ShaderProgram {
     }
 
     protected void initProgram(DrawContext dc) {
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         this.enablePickModeId = gl.glGetUniformLocation(this.programId, "enablePickMode");
         gl.glUniform1i(this.enablePickModeId, this.enablePickMode ? 1 : 0);

@@ -22,7 +22,7 @@ import gov.nasa.worldwind.geom.Matrix3;
 import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.ImageOptions;
@@ -295,7 +295,7 @@ public class Polygon extends AbstractShape {
             int size = this.vertexArray.size() * 4;
             FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
             buffer.put(this.vertexArray.array(), 0, this.vertexArray.size());
-            drawState.vertexBuffer = new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer.rewind());
+            drawState.vertexBuffer = new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer.rewind());
             rc.putBufferObject(this.vertexBufferKey, drawState.vertexBuffer);
         }
 
@@ -308,7 +308,7 @@ public class Polygon extends AbstractShape {
             buffer.put(this.sideElements.array(), 0, this.sideElements.size());
             buffer.put(this.outlineElements.array(), 0, this.outlineElements.size());
             buffer.put(this.verticalElements.array(), 0, this.verticalElements.size());
-            drawState.elementBuffer = new BufferObject(GL.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
+            drawState.elementBuffer = new BufferObject(GLES20.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
             rc.putBufferObject(this.elementBufferKey, drawState.elementBuffer);
         }
 
@@ -359,14 +359,14 @@ public class Polygon extends AbstractShape {
         // Configure the drawable to display the shape's interior top.
         drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.interiorColor);
         drawState.texCoordAttrib(2 /*size*/, 12 /*offset in bytes*/);
-        drawState.drawElements(GL.GL_TRIANGLES, this.topElements.size(),
-            GL.GL_UNSIGNED_SHORT, 0 /*offset*/);
+        drawState.drawElements(GLES20.GL_TRIANGLES, this.topElements.size(),
+            GLES20.GL_UNSIGNED_SHORT, 0 /*offset*/);
 
         // Configure the drawable to display the shape's interior sides.
         if (this.extrude) {
             drawState.texture(null);
-            drawState.drawElements(GL.GL_TRIANGLES, this.sideElements.size(),
-                GL.GL_UNSIGNED_SHORT, this.topElements.size() * 2 /*offset*/);
+            drawState.drawElements(GLES20.GL_TRIANGLES, this.sideElements.size(),
+                GLES20.GL_UNSIGNED_SHORT, this.topElements.size() * 2 /*offset*/);
         }
     }
 
@@ -395,16 +395,16 @@ public class Polygon extends AbstractShape {
         drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.outlineColor);
         drawState.lineWidth(this.activeAttributes.outlineWidth);
         drawState.texCoordAttrib(1 /*size*/, 20 /*offset in bytes*/);
-        drawState.drawElements(GL.GL_LINES, this.outlineElements.size(),
-            GL.GL_UNSIGNED_SHORT, (this.topElements.size() * 2) + (this.sideElements.size() * 2) /*offset*/);
+        drawState.drawElements(GLES20.GL_LINES, this.outlineElements.size(),
+            GLES20.GL_UNSIGNED_SHORT, (this.topElements.size() * 2) + (this.sideElements.size() * 2) /*offset*/);
 
         // Configure the drawable to display the shape's extruded verticals.
         if (this.activeAttributes.drawVerticals && this.extrude) {
             drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.outlineColor);
             drawState.lineWidth(this.activeAttributes.outlineWidth);
             drawState.texture(null);
-            drawState.drawElements(GL.GL_LINES, this.verticalElements.size(),
-                GL.GL_UNSIGNED_SHORT, (this.topElements.size() * 2) + (this.sideElements.size() * 2) + (this.outlineElements.size() * 2) /*offset*/);
+            drawState.drawElements(GLES20.GL_LINES, this.verticalElements.size(),
+                GLES20.GL_UNSIGNED_SHORT, (this.topElements.size() * 2) + (this.sideElements.size() * 2) + (this.outlineElements.size() * 2) /*offset*/);
         }
     }
 

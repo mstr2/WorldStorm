@@ -129,13 +129,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\main\native\EGL.cpp" />
-    <ClCompile Include="src\main\native\GL.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
+    <ClCompile Include="src\main\native\EGL14Impl.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\main\native\GLES20.cpp" />
+    <ClCompile Include="src\main\native\GLES20Impl.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main\native\jnitools.h" />

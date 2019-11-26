@@ -21,7 +21,7 @@ import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Position;
 import gov.nasa.worldwind.geom.Range;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.ImageOptions;
@@ -478,7 +478,7 @@ public class Ellipse extends AbstractShape {
             int size = this.vertexArray.length * 4;
             FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
             buffer.put(this.vertexArray, 0, this.vertexArray.length);
-            drawState.vertexBuffer = new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer.rewind());
+            drawState.vertexBuffer = new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer.rewind());
             rc.putBufferObject(this.vertexBufferKey, drawState.vertexBuffer);
         }
 
@@ -542,14 +542,14 @@ public class Ellipse extends AbstractShape {
         drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.interiorColor);
         drawState.texCoordAttrib(2 /*size*/, 12 /*offset in bytes*/);
         Range top = drawState.elementBuffer.ranges.get(TOP_RANGE);
-        drawState.drawElements(GL.GL_TRIANGLE_STRIP, top.length(),
-            GL.GL_UNSIGNED_SHORT, top.lower * 2 /*offset*/);
+        drawState.drawElements(GLES20.GL_TRIANGLE_STRIP, top.length(),
+            GLES20.GL_UNSIGNED_SHORT, top.lower * 2 /*offset*/);
 
         if (this.extrude) {
             Range side = drawState.elementBuffer.ranges.get(SIDE_RANGE);
             drawState.texture(null);
-            drawState.drawElements(GL.GL_TRIANGLE_STRIP, side.length(),
-                GL.GL_UNSIGNED_SHORT, side.lower * 2);
+            drawState.drawElements(GLES20.GL_TRIANGLE_STRIP, side.length(),
+                GLES20.GL_UNSIGNED_SHORT, side.lower * 2);
         }
     }
 
@@ -579,16 +579,16 @@ public class Ellipse extends AbstractShape {
         drawState.lineWidth(this.activeAttributes.outlineWidth);
         drawState.texCoordAttrib(1 /*size*/, 20 /*offset in bytes*/);
         Range outline = drawState.elementBuffer.ranges.get(OUTLINE_RANGE);
-        drawState.drawElements(GL.GL_LINE_LOOP, outline.length(),
-            GL.GL_UNSIGNED_SHORT, outline.lower * 2 /*offset*/);
+        drawState.drawElements(GLES20.GL_LINE_LOOP, outline.length(),
+            GLES20.GL_UNSIGNED_SHORT, outline.lower * 2 /*offset*/);
 
         if (this.activeAttributes.drawVerticals && this.extrude) {
             Range side = drawState.elementBuffer.ranges.get(SIDE_RANGE);
             drawState.color(rc.pickMode ? this.pickColor : this.activeAttributes.outlineColor);
             drawState.lineWidth(this.activeAttributes.outlineWidth);
             drawState.texture(null);
-            drawState.drawElements(GL.GL_LINES, side.length(),
-                GL.GL_UNSIGNED_SHORT, side.lower * 2);
+            drawState.drawElements(GLES20.GL_LINES, side.length(),
+                GLES20.GL_UNSIGNED_SHORT, side.lower * 2);
         }
     }
 
@@ -744,7 +744,7 @@ public class Ellipse extends AbstractShape {
         int size = elements.size() * 2;
         ShortBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asShortBuffer();
         buffer.put(elements.array(), 0, elements.size());
-        BufferObject elementBuffer = new BufferObject(GL.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
+        BufferObject elementBuffer = new BufferObject(GLES20.GL_ELEMENT_ARRAY_BUFFER, size, buffer.rewind());
         elementBuffer.ranges.put(TOP_RANGE, topRange);
         elementBuffer.ranges.put(OUTLINE_RANGE, outlineRange);
         elementBuffer.ranges.put(SIDE_RANGE, sideRange);

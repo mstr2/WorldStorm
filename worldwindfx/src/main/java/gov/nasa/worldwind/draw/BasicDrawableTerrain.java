@@ -8,7 +8,7 @@ package gov.nasa.worldwind.draw;
 import gov.nasa.worldwind.geom.Range;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.util.Pool;
@@ -70,7 +70,7 @@ public class BasicDrawableTerrain implements DrawableTerrain {
     public boolean useVertexPointAttrib(DrawContext dc, int attribLocation) {
         boolean bufferBound = (this.vertexPoints != null && this.vertexPoints.bindBuffer(dc));
         if (bufferBound) {
-            Platform.getGL().glVertexAttribPointer(attribLocation, 3, GL.GL_FLOAT, false, 0, 0);
+            Platform.getGL().glVertexAttribPointer(attribLocation, 3, GLES20.GL_FLOAT, false, 0, 0);
         }
 
         return bufferBound;
@@ -80,7 +80,7 @@ public class BasicDrawableTerrain implements DrawableTerrain {
     public boolean useVertexTexCoordAttrib(DrawContext dc, int attribLocation) {
         boolean bufferBound = (this.vertexTexCoords != null && this.vertexTexCoords.bindBuffer(dc));
         if (bufferBound){
-            Platform.getGL().glVertexAttribPointer(attribLocation, 2, GL.GL_FLOAT, false, 0, 0);
+            Platform.getGL().glVertexAttribPointer(attribLocation, 2, GLES20.GL_FLOAT, false, 0, 0);
         }
 
         return bufferBound;
@@ -90,7 +90,7 @@ public class BasicDrawableTerrain implements DrawableTerrain {
     public boolean drawLines(DrawContext dc) {
         boolean bufferBound = (this.elements != null && this.elements.bindBuffer(dc));
         if (bufferBound) {
-            Platform.getGL().glDrawElements(GL.GL_LINES, this.lineElementRange.length(), GL.GL_UNSIGNED_SHORT,
+            Platform.getGL().glDrawElements(GLES20.GL_LINES, this.lineElementRange.length(), GLES20.GL_UNSIGNED_SHORT,
                 this.lineElementRange.lower * 2);
         }
 
@@ -101,7 +101,7 @@ public class BasicDrawableTerrain implements DrawableTerrain {
     public boolean drawTriangles(DrawContext dc) {
         boolean bufferBound = (this.elements != null && this.elements.bindBuffer(dc));
         if (bufferBound) {
-            Platform.getGL().glDrawElements(GL.GL_TRIANGLE_STRIP, this.triStripElementRange.length(), GL.GL_UNSIGNED_SHORT,
+            Platform.getGL().glDrawElements(GLES20.GL_TRIANGLE_STRIP, this.triStripElementRange.length(), GLES20.GL_UNSIGNED_SHORT,
                 this.triStripElementRange.lower * 2);
         }
 

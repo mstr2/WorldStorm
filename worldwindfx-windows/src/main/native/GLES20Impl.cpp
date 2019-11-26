@@ -319,6 +319,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteBuffers__I_3II(
 		JNIEnv* env, jobject, jint n, jintArray buffers, jint offset)
 	{
+		ValidateArraySize_V(buffers, offset, n);
 		glDeleteBuffers(n, IntBuffer(env, buffers, offset));
 	}
 
@@ -330,6 +331,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteBuffers__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint n, jobject buffers)
 	{
+		ValidateBufferSize_V(buffers, n);
 		glDeleteBuffers(n, IntBuffer(env, buffers));
 	}
 
@@ -341,6 +343,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteFramebuffers__I_3II(
 		JNIEnv* env, jobject, jint n, jintArray framebuffers, jint offset)
 	{
+		ValidateArraySize_V(framebuffers, offset, n);
 		glDeleteFramebuffers(n, IntBuffer(env, framebuffers, offset));
 	}
 
@@ -352,6 +355,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteFramebuffers__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint n, jobject framebuffers)
 	{
+		ValidateBufferSize_V(framebuffers, n);
 		glDeleteFramebuffers(n, IntBuffer(env, framebuffers));
 	}
 
@@ -374,6 +378,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteRenderbuffers__I_3II(
 		JNIEnv* env, jobject, jint n, jintArray renderbuffers, jint offset)
 	{
+		ValidateArraySize_V(renderbuffers, offset, n);
 		glDeleteRenderbuffers(n, IntBuffer(env, renderbuffers, offset));
 	}
 
@@ -385,6 +390,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteRenderbuffers__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint n, jobject renderbuffers)
 	{
+		ValidateBufferSize_V(renderbuffers, n);
 		glDeleteRenderbuffers(n, IntBuffer(env, renderbuffers));
 	}
 
@@ -407,6 +413,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteTextures__I_3II(
 		JNIEnv* env, jobject, jint n, jintArray textures, jint offset)
 	{
+		ValidateArraySize_V(textures, offset, n);
 		glDeleteTextures(n, IntBuffer(env, textures, offset));
 	}
 
@@ -418,6 +425,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDeleteTextures__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint n, jobject textures)
 	{
+		ValidateBufferSize_V(textures, n);
 		glDeleteTextures(n, IntBuffer(env, textures));
 	}
 
@@ -517,6 +525,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glDrawElements__IIILjava_nio_Buffer_2(
 		JNIEnv* env, jobject, jint mode, jint count, jint type, jobject indices)
 	{
+		ValidateBufferSize_V(indices, count);
 		glDrawElements(mode, count, type, ByteBuffer(env, indices));
 	}
 
@@ -605,6 +614,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenBuffers__I_3II(
 		JNIEnv* env, jobject, jint n, jintArray buffers, jint offset)
 	{
+		ValidateArraySize_V(buffers, offset, n);
 		glGenBuffers(n, IntBuffer(env, buffers, offset));
 	}
 
@@ -616,6 +626,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenBuffers__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint n, jobject buffers)
 	{
+		ValidateBufferSize_V(buffers, n);
 		glGenBuffers(n, IntBuffer(env, buffers));
 	}
 
@@ -636,9 +647,10 @@ extern "C" {
 	 * Signature: (I[II)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenFramebuffers__I_3II(
-		JNIEnv* env, jobject, jint n, jintArray buffer, jint offset)
+		JNIEnv* env, jobject, jint n, jintArray framebuffers, jint offset)
 	{
-		glGenFramebuffers(n, IntBuffer(env, buffer, offset));
+		ValidateArraySize_V(framebuffers, offset, n);
+		glGenFramebuffers(n, IntBuffer(env, framebuffers, offset));
 	}
 
 	/*
@@ -647,9 +659,10 @@ extern "C" {
 	 * Signature: (ILjava/nio/IntBuffer;)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenFramebuffers__ILjava_nio_IntBuffer_2(
-		JNIEnv* env, jobject, jint n, jobject buffer)
+		JNIEnv* env, jobject, jint n, jobject framebuffers)
 	{
-		glGenFramebuffers(n, IntBuffer(env, buffer));
+		ValidateBufferSize_V(framebuffers, n);
+		glGenFramebuffers(n, IntBuffer(env, framebuffers));
 	}
 
 	/*
@@ -658,9 +671,10 @@ extern "C" {
 	 * Signature: (I[II)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenRenderbuffers__I_3II(
-		JNIEnv* env, jobject, jint n, jintArray buffer, jint offset)
+		JNIEnv* env, jobject, jint n, jintArray renderbuffers, jint offset)
 	{
-		glGenRenderbuffers(n, IntBuffer(env, buffer, offset));
+		ValidateArraySize_V(renderbuffers, offset, n);
+		glGenRenderbuffers(n, IntBuffer(env, renderbuffers, offset));
 	}
 
 	/*
@@ -669,9 +683,10 @@ extern "C" {
 	 * Signature: (ILjava/nio/IntBuffer;)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenRenderbuffers__ILjava_nio_IntBuffer_2(
-		JNIEnv* env, jobject, jint n, jobject buffer)
+		JNIEnv* env, jobject, jint n, jobject renderbuffers)
 	{
-		glGenRenderbuffers(n, IntBuffer(env, buffer));
+		ValidateBufferSize_V(renderbuffers, n);
+		glGenRenderbuffers(n, IntBuffer(env, renderbuffers));
 	}
 
 	/*
@@ -680,9 +695,10 @@ extern "C" {
 	 * Signature: (I[II)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenTextures__I_3II(
-		JNIEnv* env, jobject, jint n, jintArray buffer, jint offset)
+		JNIEnv* env, jobject, jint n, jintArray textures, jint offset)
 	{
-		glGenTextures(n, IntBuffer(env, buffer, offset));
+		ValidateArraySize_V(textures, offset, n);
+		glGenTextures(n, IntBuffer(env, textures, offset));
 	}
 
 	/*
@@ -691,9 +707,10 @@ extern "C" {
 	 * Signature: (ILjava/nio/IntBuffer;)V
 	 */
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGenTextures__ILjava_nio_IntBuffer_2(
-		JNIEnv* env, jobject, jint n, jobject buffer)
+		JNIEnv* env, jobject, jint n, jobject textures)
 	{
-		glGenTextures(n, IntBuffer(env, buffer));
+		ValidateBufferSize_V(textures, n);
+		glGenTextures(n, IntBuffer(env, textures));
 	}
 
 	/*
@@ -704,7 +721,10 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveAttrib__III_3II_3II_3II_3BI(
 		JNIEnv* env, jobject, jint program, jint index, jint bufSize, jintArray length, jint lengthOffset, jintArray size, jint sizeOffset, jintArray type, jint typeOffset, jbyteArray name, jint nameOffset)
 	{
-		glGetActiveAttrib(program, index, bufSize, IntBuffer(env, length, lengthOffset), IntBuffer(env, size, sizeOffset), IntBuffer(env, type, typeOffset), ByteBuffer(env, name, nameOffset));
+		ValidateArraySize_V(length, lengthOffset, 1);
+		ValidateArraySize_V(size, sizeOffset, 1);
+		ValidateArraySize_V(type, typeOffset, 1);
+		glGetActiveAttrib(program, index, bufSize, IntRegion<1>(env, length, lengthOffset), IntRegion<1>(env, size, sizeOffset), IntRegion<1>(env, type, typeOffset), ByteBuffer(env, name, nameOffset));
 	}
 
 	/*
@@ -715,10 +735,12 @@ extern "C" {
 	JNIEXPORT jstring JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveAttrib__II_3II_3II(
 		JNIEnv* env, jobject, jint program, jint index, jintArray size, jint sizeOffset, jintArray type, jint typeOffset)
 	{
+		ValidateArraySize_I(size, sizeOffset, 1);
+		ValidateArraySize_I(type, typeOffset, 1);
 		int maxAttrLength;
 		glGetProgramiv(program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxAttrLength);
 		OutString name(env, maxAttrLength);
-		glGetActiveAttrib(program, index, maxAttrLength, nullptr, IntBuffer(env, size, sizeOffset), IntBuffer(env, type, typeOffset), name);
+		glGetActiveAttrib(program, index, maxAttrLength, nullptr, IntRegion<1>(env, size, sizeOffset), IntRegion<1>(env, type, typeOffset), name);
 		return name;
 	}
 
@@ -730,6 +752,8 @@ extern "C" {
 	JNIEXPORT jstring JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveAttrib__IILjava_nio_IntBuffer_2Ljava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint program, jint index, jobject size, jobject type)
 	{
+		ValidateBufferSize_I(size, 1);
+		ValidateBufferSize_I(type, 1);
 		int maxAttrLength;
 		glGetProgramiv(program, GL_ACTIVE_ATTRIBUTE_MAX_LENGTH, &maxAttrLength);
 		OutString name(env, maxAttrLength);
@@ -745,7 +769,10 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveUniform__III_3II_3II_3II_3BI(
 		JNIEnv* env, jobject, jint program, jint index, jint bufSize, jintArray length, jint lengthOffset, jintArray size, jint sizeOffset, jintArray type, jint typeOffset, jbyteArray name, jint nameOffset)
 	{
-		glGetActiveUniform(program, index, bufSize, IntBuffer(env, length, lengthOffset), IntBuffer(env, size, sizeOffset), IntBuffer(env, type, typeOffset), ByteBuffer(env, name, nameOffset));
+		ValidateArraySize_V(length, lengthOffset, 1);
+		ValidateArraySize_V(size, sizeOffset, 1);
+		ValidateArraySize_V(type, typeOffset, 1);
+		glGetActiveUniform(program, index, bufSize, IntRegion<1>(env, length, lengthOffset), IntRegion<1>(env, size, sizeOffset), IntRegion<1>(env, type, typeOffset), ByteBuffer(env, name, nameOffset));
 	}
 
 	/*
@@ -756,10 +783,12 @@ extern "C" {
 	JNIEXPORT jstring JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveUniform__II_3II_3II(
 		JNIEnv* env, jobject, jint program, jint index, jintArray size, jint sizeOffset, jintArray type, jint typeOffset)
 	{
+		ValidateArraySize_I(size, sizeOffset, 1);
+		ValidateArraySize_I(type, typeOffset, 1);
 		int maxUniformLength;
 		glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformLength);
 		OutString name(env, maxUniformLength);
-		glGetActiveUniform(program, index, maxUniformLength, nullptr, IntBuffer(env, size, sizeOffset), IntBuffer(env, type, typeOffset), name);
+		glGetActiveUniform(program, index, maxUniformLength, nullptr, IntRegion<1>(env, size, sizeOffset), IntRegion<1>(env, type, typeOffset), name);
 		return name;
 	}
 
@@ -771,6 +800,8 @@ extern "C" {
 	JNIEXPORT jstring JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetActiveUniform__IILjava_nio_IntBuffer_2Ljava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint program, jint index, jobject size, jobject type)
 	{
+		ValidateBufferSize_I(size, 1);
+		ValidateBufferSize_I(type, 1);
 		int maxUniformLength;
 		glGetProgramiv(program, GL_ACTIVE_UNIFORM_MAX_LENGTH, &maxUniformLength);
 		OutString name(env, maxUniformLength);
@@ -786,7 +817,9 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetAttachedShaders__II_3II_3II(
 		JNIEnv* env, jobject, jint program, jint maxCount, jintArray count, jint countOffset, jintArray shaders, jint shadersOffset)
 	{
-		glGetAttachedShaders(program, maxCount, IntBuffer(env, count, countOffset), IntBuffer(env, shaders, shadersOffset));
+		ValidateArraySize_V(count, countOffset, 1);
+		ValidateArraySize_V(shaders, shadersOffset, maxCount);
+		glGetAttachedShaders(program, maxCount, IntRegion<1>(env, count, countOffset), IntBuffer(env, shaders, shadersOffset));
 	}
 
 	/*
@@ -797,6 +830,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetAttachedShaders__IILjava_nio_IntBuffer_2Ljava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint program, jint maxCount, jobject count, jobject shaders)
 	{
+		ValidateBufferSize_V(count, 1);
+		ValidateBufferSize_V(shaders, maxCount);
 		glGetAttachedShaders(program, maxCount, IntBuffer(env, count), IntBuffer(env, shaders));
 	}
 
@@ -819,6 +854,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetBooleanv__I_3ZI(
 		JNIEnv* env, jobject, jint pname, jbooleanArray data, jint dataOffset)
 	{
+		ValidateArraySize_V(data, dataOffset, 1);
 		glGetBooleanv(pname, BoolBuffer(env, data, dataOffset));
 	}
 
@@ -830,6 +866,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetBooleanv__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint pname, jobject buffer)
 	{
+		ValidateBufferSize_V(buffer, 1);
 		glGetBooleanv(pname, BoolBuffer(env, buffer));
 	}
 
@@ -841,6 +878,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetBufferParameteriv__II_3II(
 		JNIEnv* env, jobject, jint target, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetBufferParameteriv(target, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -852,6 +890,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetBufferParameteriv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetBufferParameteriv(target, pname, IntBuffer(env, params));
 	}
 
@@ -874,6 +913,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetFloatv__I_3FI(
 		JNIEnv* env, jobject, jint pname, jfloatArray data, jint dataOffset)
 	{
+		ValidateArraySize_V(data, dataOffset, 1);
 		return glGetFloatv(pname, FloatBuffer(env, data, dataOffset));
 	}
 
@@ -885,6 +925,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetFloatv__ILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint pname, jobject data)
 	{
+		ValidateBufferSize_V(data, 1);
 		glGetFloatv(pname, FloatBuffer(env, data));
 	}
 
@@ -896,6 +937,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetFramebufferAttachmentParameteriv__III_3II(
 		JNIEnv* env, jobject, jint target, jint attachment, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetFramebufferAttachmentParameteriv(target, attachment, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -907,6 +949,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetFramebufferAttachmentParameteriv__IIILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint target, jint attachment, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetFramebufferAttachmentParameteriv(target, attachment, pname, IntBuffer(env, params));
 	}
 
@@ -918,6 +961,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetIntegerv__I_3II(
 		JNIEnv* env, jobject, jint pname, jintArray data, jint dataOffset)
 	{
+		ValidateArraySize_V(data, dataOffset, 1);
 		glGetIntegerv(pname, IntBuffer(env, data, dataOffset));
 	}
 
@@ -929,6 +973,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetIntegerv__ILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint pname, jobject data)
 	{
+		ValidateBufferSize_V(data, 1);
 		glGetIntegerv(pname, IntBuffer(env, data));
 	}
 
@@ -940,6 +985,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetProgramiv__II_3II(
 		JNIEnv* env, jobject, jint program, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetProgramiv(program, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -951,6 +997,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetProgramiv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint program, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetProgramiv(program, pname, IntBuffer(env, params));
 	}
 
@@ -975,6 +1022,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetRenderbufferParameteriv__II_3II(
 		JNIEnv* env, jobject, jint target, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetRenderbufferParameteriv(target, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -986,6 +1034,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetRenderbufferParameteriv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetRenderbufferParameteriv(target, pname, IntBuffer(env, params));
 	}
 
@@ -997,6 +1046,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetShaderiv__II_3II(
 		JNIEnv* env, jobject, jint shader, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetShaderiv(shader, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -1008,6 +1058,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetShaderiv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint shader, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetShaderiv(shader, pname, IntBuffer(env, params));
 	}
 
@@ -1032,7 +1083,9 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetShaderPrecisionFormat__II_3II_3II(
 		JNIEnv* env, jobject, jint shadertype, jint precisiontype, jintArray range, jint rangeOffset, jintArray precision, jint precisionOffset)
 	{
-		glGetShaderPrecisionFormat(shadertype, precisiontype, IntBuffer(env, range, rangeOffset), IntBuffer(env, precision, precisionOffset));
+		ValidateArraySize_V(range, rangeOffset, 2);
+		ValidateArraySize_V(precision, precisionOffset, 1);
+		glGetShaderPrecisionFormat(shadertype, precisiontype, IntBuffer(env, range, rangeOffset), IntRegion<1>(env, precision, precisionOffset));
 	}
 
 	/*
@@ -1043,6 +1096,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetShaderPrecisionFormat__IILjava_nio_IntBuffer_2Ljava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint shadertype, jint precisiontype, jobject range, jobject precision)
 	{
+		ValidateBufferSize_V(range, 2);
+		ValidateBufferSize_V(precision, 1);
 		glGetShaderPrecisionFormat(shadertype, precisiontype, IntBuffer(env, range), IntBuffer(env, precision));
 	}
 
@@ -1054,6 +1109,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetShaderSource__II_3II_3BI(
 		JNIEnv* env, jobject, jint shader, jint bufSize, jintArray length, jint lengthOffset, jbyteArray source, jint sourceOffset)
 	{
+		ValidateArraySize_V(length, lengthOffset, 1);
+		ValidateArraySize_V(source, sourceOffset, bufSize);
 		glGetShaderSource(shader, bufSize, IntBuffer(env, length, lengthOffset), ByteBuffer(env, source, sourceOffset));
 	}
 
@@ -1091,6 +1148,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetTexParameterfv__II_3FI(
 		JNIEnv* env, jobject, jint target, jint pname, jfloatArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetTexParameterfv(target, pname, FloatBuffer(env, params, paramsOffset));
 	}
 
@@ -1102,6 +1160,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetTexParameterfv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetTexParameterfv(target, pname, FloatBuffer(env, params));
 	}
 
@@ -1113,6 +1172,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetTexParameteriv__II_3II(
 		JNIEnv* env, jobject, jint target, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetTexParameteriv(target, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -1124,6 +1184,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetTexParameteriv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetTexParameteriv(target, pname, IntBuffer(env, params));
 	}
 
@@ -1135,6 +1196,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetUniformfv__II_3FI(
 		JNIEnv* env, jobject, jint program, jint location, jfloatArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetUniformfv(program, location, FloatBuffer(env, params, paramsOffset));
 	}
 
@@ -1146,6 +1208,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetUniformfv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint program, jint location, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetUniformfv(program, location, FloatBuffer(env, params));
 	}
 
@@ -1157,6 +1220,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetUniformiv__II_3II(
 		JNIEnv* env, jobject, jint program, jint location, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetUniformiv(program, location, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -1168,6 +1232,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetUniformiv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint program, jint location, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetUniformiv(program, location, IntBuffer(env, params));
 	}
 
@@ -1190,6 +1255,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetVertexAttribfv__II_3FI(
 		JNIEnv* env, jobject, jint index, jint pname, jfloatArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetVertexAttribfv(index, pname, FloatBuffer(env, params, paramsOffset));
 	}
 
@@ -1201,6 +1267,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetVertexAttribfv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint index, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetVertexAttribfv(index, pname, FloatBuffer(env, params));
 	}
 
@@ -1212,6 +1279,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetVertexAttribiv__II_3II(
 		JNIEnv* env, jobject, jint index, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glGetVertexAttribiv(index, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -1223,6 +1291,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glGetVertexAttribiv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint index, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glGetVertexAttribiv(index, pname, IntBuffer(env, params));
 	}
 
@@ -1421,6 +1490,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glShaderBinary__I_3IIILjava_nio_Buffer_2I(
 		JNIEnv* env, jobject, jint count, jintArray shaders, jint shadersOffset, jint binaryformat, jobject binary, jint length)
 	{
+		ValidateArraySize_V(shaders, shadersOffset, count);
+		ValidateBufferSize_V(binary, length);
 		glShaderBinary(count, IntBuffer(env, shaders, shadersOffset), binaryformat, ByteBuffer(env, binary), length);
 	}
 
@@ -1432,6 +1503,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glShaderBinary__ILjava_nio_IntBuffer_2ILjava_nio_Buffer_2I(
 		JNIEnv* env, jobject, jint count, jobject shaders, jint binaryformat, jobject binary, jint length)
 	{
+		ValidateBufferSize_V(shaders, count);
+		ValidateBufferSize_V(binary, length);
 		glShaderBinary(count, IntBuffer(env, shaders), binaryformat, ByteBuffer(env, binary), length);
 	}
 
@@ -1545,6 +1618,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glTexParameterfv__II_3FI(
 		JNIEnv* env, jobject, jint target, jint pname, jfloatArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glTexParameterfv(target, pname, FloatBuffer(env, params, paramsOffset));
 	}
 
@@ -1556,6 +1630,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glTexParameterfv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glTexParameterfv(target, pname, FloatBuffer(env, params));
 	}
 
@@ -1578,6 +1653,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glTexParameteriv__II_3II(
 		JNIEnv* env, jobject, jint target, jint pname, jintArray params, jint paramsOffset)
 	{
+		ValidateArraySize_V(params, paramsOffset, 1);
 		glTexParameteriv(target, pname, IntBuffer(env, params, paramsOffset));
 	}
 
@@ -1589,6 +1665,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glTexParameteriv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint target, jint pname, jobject params)
 	{
+		ValidateBufferSize_V(params, 1);
 		glTexParameteriv(target, pname, IntBuffer(env, params));
 	}
 
@@ -1622,6 +1699,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform1fv__II_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count);
 		glUniform1fv(location, count, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1633,6 +1711,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform1fv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count);
 		glUniform1fv(location, count, FloatBuffer(env, value));
 	}
 
@@ -1655,6 +1734,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform1iv__II_3II(
 		JNIEnv* env, jobject, jint location, jint count, jintArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count);
 		glUniform1iv(location, count, IntBuffer(env, value, valueOffset));
 	}
 
@@ -1666,6 +1746,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform1iv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count);
 		glUniform1iv(location, count, IntBuffer(env, value));
 	}
 
@@ -1688,6 +1769,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform2fv__II_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 2);
 		glUniform2fv(location, count, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1699,6 +1781,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform2fv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 2);
 		glUniform2fv(location, count, FloatBuffer(env, value));
 	}
 
@@ -1721,6 +1804,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform2iv__II_3II(
 		JNIEnv* env, jobject, jint location, jint count, jintArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 2);
 		glUniform2iv(location, count, IntBuffer(env, value, valueOffset));
 	}
 
@@ -1732,6 +1816,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform2iv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 2);
 		glUniform2iv(location, count, IntBuffer(env, value));
 	}
 
@@ -1754,6 +1839,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform3fv__II_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 3);
 		glUniform2fv(location, count, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1765,6 +1851,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform3fv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 3);
 		glUniform2fv(location, count, FloatBuffer(env, value));
 	}
 
@@ -1787,6 +1874,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform3iv__II_3II(
 		JNIEnv* env, jobject, jint location, jint count, jintArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 3);
 		glUniform3iv(location, count, IntBuffer(env, value, valueOffset));
 	}
 
@@ -1798,6 +1886,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform3iv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 3);
 		glUniform3iv(location, count, IntBuffer(env, value));
 	}
 
@@ -1820,6 +1909,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform4fv__II_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 4);
 		glUniform4fv(location, count, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1831,6 +1921,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform4fv__IILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 4);
 		glUniform4fv(location, count, FloatBuffer(env, value));
 	}
 
@@ -1853,6 +1944,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform4iv__II_3II(
 		JNIEnv* env, jobject, jint location, jint count, jintArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 4);
 		glUniform4iv(location, count, IntBuffer(env, value, valueOffset));
 	}
 
@@ -1864,6 +1956,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniform4iv__IILjava_nio_IntBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 4);
 		glUniform4iv(location, count, IntBuffer(env, value));
 	}
 
@@ -1875,6 +1968,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix2fv__IIZ_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 4);
 		glUniformMatrix2fv(location, count, transpose, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1886,6 +1980,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix2fv__IIZLjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 4);
 		glUniformMatrix2fv(location, count, transpose, FloatBuffer(env, value));
 	}
 
@@ -1897,6 +1992,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix3fv__IIZ_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 9);
 		glUniformMatrix3fv(location, count, transpose, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1908,6 +2004,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix3fv__IIZLjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 9);
 		glUniformMatrix3fv(location, count, transpose, FloatBuffer(env, value));
 	}
 
@@ -1919,6 +2016,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix4fv__IIZ_3FI(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jfloatArray value, jint valueOffset)
 	{
+		ValidateArraySize_V(value, valueOffset, count * 16);
 		glUniformMatrix4fv(location, count, transpose, FloatBuffer(env, value, valueOffset));
 	}
 
@@ -1930,6 +2028,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glUniformMatrix4fv__IIZLjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint location, jint count, jboolean transpose, jobject value)
 	{
+		ValidateBufferSize_V(value, count * 16);
 		glUniformMatrix4fv(location, count, transpose, FloatBuffer(env, value));
 	}
 
@@ -1974,6 +2073,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib1fv__I_3FI(
 		JNIEnv* env, jobject, jint index, jfloatArray v, jint vOffset)
 	{
+		ValidateArraySize_V(v, vOffset, 1);
 		glVertexAttrib1fv(index, FloatBuffer(env, v, vOffset));
 	}
 
@@ -1985,6 +2085,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib1fv__ILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint index, jobject v)
 	{
+		ValidateBufferSize_V(v, 1);
 		glVertexAttrib1fv(index, FloatBuffer(env, v));
 	}
 
@@ -2007,6 +2108,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib2fv__I_3FI(
 		JNIEnv* env, jobject, jint index, jfloatArray v, jint vOffset)
 	{
+		ValidateArraySize_V(v, vOffset, 2);
 		glVertexAttrib2fv(index, FloatBuffer(env, v, vOffset));
 	}
 
@@ -2018,6 +2120,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib2fv__ILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint index, jobject v)
 	{
+		ValidateBufferSize_V(v, 2);
 		glVertexAttrib2fv(index, FloatBuffer(env, v));
 	}
 
@@ -2040,6 +2143,7 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib3fv__I_3FI(
 		JNIEnv* env, jobject, jint index, jfloatArray v, jint vOffset)
 	{
+		ValidateArraySize_V(v, vOffset, 3);
 		glVertexAttrib3fv(index, FloatBuffer(env, v, vOffset));
 	}
 
@@ -2051,7 +2155,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib3fv__ILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint index, jobject v)
 	{
-		glVertexAttrib2fv(index, FloatBuffer(env, v));
+		ValidateBufferSize_V(v, 3);
+		glVertexAttrib3fv(index, FloatBuffer(env, v));
 	}
 
 	/*
@@ -2073,7 +2178,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib4fv__I_3FI(
 		JNIEnv* env, jobject, jint index, jfloatArray v, jint vOffset)
 	{
-		glVertexAttrib2fv(index, FloatBuffer(env, v, vOffset));
+		ValidateArraySize_V(v, vOffset, 4);
+		glVertexAttrib4fv(index, FloatBuffer(env, v, vOffset));
 	}
 
 	/*
@@ -2084,7 +2190,8 @@ extern "C" {
 	JNIEXPORT void JNICALL Java_gov_nasa_worldwind_platform_GLES20Impl_glVertexAttrib4fv__ILjava_nio_FloatBuffer_2(
 		JNIEnv* env, jobject, jint index, jobject v)
 	{
-		glVertexAttrib2fv(index, FloatBuffer(env, v));
+		ValidateBufferSize_V(v, 4);
+		glVertexAttrib4fv(index, FloatBuffer(env, v));
 	}
 
 	/*

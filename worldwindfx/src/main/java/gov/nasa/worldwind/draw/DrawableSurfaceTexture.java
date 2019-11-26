@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import gov.nasa.worldwind.geom.Matrix3;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.Color;
 import gov.nasa.worldwind.render.SurfaceTexture;
@@ -110,9 +110,9 @@ public class DrawableSurfaceTexture implements Drawable, SurfaceTexture {
 
         // Enable the program to display surface textures from multitexture unit 0.
         this.program.enableTexture(true);
-        dc.activeTextureUnit(GL.GL_TEXTURE0);
+        dc.activeTextureUnit(GLES20.GL_TEXTURE0);
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Set up to use vertex tex coord attributes.
         gl.glEnableVertexAttribArray(1);

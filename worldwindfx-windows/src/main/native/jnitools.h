@@ -1,9 +1,11 @@
 #pragma once
 
 #include <jni.h>
+#include <GLES2/gl2.h>
 #include <cstdint>
 #include <memory>
 #include <stdexcept>
+#include <array>
 
 class InString
 {
@@ -75,16 +77,27 @@ class ByteBuffer
 {
 public:
 	ByteBuffer(JNIEnv* env, jbyteArray array, jint offset) :
-		env_(env), array_(array), elements_(env->GetByteArrayElements(array, false)), offset_(offset)
+		env_(env), array_(array), offset_(offset)
 	{
+		if (array != nullptr)
+		{
+			elements_ = env->GetByteArrayElements(array, nullptr);
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
 		}
 	}
 
-	ByteBuffer(JNIEnv* env, jobject jbuf) : env_(env), elements_((jbyte*)env->GetDirectBufferAddress(jbuf))
+	ByteBuffer(JNIEnv* env, jobject buffer) :
+		env_(env)
 	{
+		if (buffer != nullptr)
+		{
+			elements_ = reinterpret_cast<jbyte*>(env->GetDirectBufferAddress(buffer));
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -103,22 +116,22 @@ public:
 
 	operator const void*() const
 	{
-		return reinterpret_cast<void*>(elements_);
+		return elements_ != nullptr ? reinterpret_cast<void*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator void*()
 	{
-		return reinterpret_cast<void*>(elements_);
+		return elements_ != nullptr ? reinterpret_cast<void*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator const char*() const
 	{
-		return reinterpret_cast<char*>(elements_);
+		return elements_ != nullptr ? reinterpret_cast<char*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator char*()
 	{
-		return reinterpret_cast<char*>(elements_);
+		return elements_ != nullptr ? reinterpret_cast<char*>(&elements_[offset_]) : nullptr;
 	}
 
 private:
@@ -132,8 +145,13 @@ class IntBuffer
 {
 public:
 	IntBuffer(JNIEnv* env, jintArray array, jint offset) :
-		env_(env), array_(array), elements_(env->GetIntArrayElements(array, false)), offset_(offset)
+		env_(env), array_(array), offset_(offset)
 	{
+		if (array != nullptr)
+		{
+			elements_ = env->GetIntArrayElements(array, nullptr);
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -141,8 +159,13 @@ public:
 	}
 
 	IntBuffer(JNIEnv* env, jobject buffer) :
-		env_(env), elements_(reinterpret_cast<jint*>(env->GetDirectBufferAddress(buffer)))
+		env_(env)
 	{
+		if (buffer != nullptr)
+		{
+			elements_ = reinterpret_cast<jint*>(env->GetDirectBufferAddress(buffer));
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -161,22 +184,22 @@ public:
 
 	operator const std::int32_t*() const
 	{
-		return reinterpret_cast<std::int32_t*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<std::int32_t*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator std::int32_t*()
 	{
-		return reinterpret_cast<std::int32_t*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<std::int32_t*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator const std::uint32_t*() const
 	{
-		return reinterpret_cast<std::uint32_t*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<std::uint32_t*>(&elements_[offset_]) : nullptr;
 	}
 
 	operator std::uint32_t*()
 	{
-		return reinterpret_cast<std::uint32_t*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<std::uint32_t*>(&elements_[offset_]) : nullptr;
 	}
 
 private:
@@ -186,12 +209,85 @@ private:
 	jint offset_ = 0;
 };
 
+class LongBuffer
+{
+public:
+	LongBuffer(JNIEnv* env, jlongArray array, jint offset) :
+		env_(env), array_(array), offset_(offset)
+	{
+		if (array != nullptr)
+		{
+			elements_ = env->GetLongArrayElements(array, nullptr);
+		}
+
+		if (env->ExceptionCheck())
+		{
+			env->ExceptionDescribe();
+		}
+	}
+
+	LongBuffer(JNIEnv* env, jobject buffer) :
+		env_(env)
+	{
+		if (buffer != nullptr)
+		{
+			elements_ = reinterpret_cast<jlong*>(env->GetDirectBufferAddress(buffer));
+		}
+
+		if (env->ExceptionCheck())
+		{
+			env->ExceptionDescribe();
+		}
+	}
+
+	LongBuffer(LongBuffer const&) = delete;
+
+	~LongBuffer()
+	{
+		if (array_ != nullptr)
+		{
+			env_->ReleaseLongArrayElements(array_, elements_, 0);
+		}
+	}
+
+	operator const std::int64_t*() const
+	{
+		return elements_ != nullptr ? reinterpret_cast<std::int64_t*>(&elements_[offset_]) : nullptr;
+	}
+
+	operator std::int64_t*()
+	{
+		return elements_ != nullptr ? reinterpret_cast<std::int64_t*>(&elements_[offset_]) : nullptr;
+	}
+
+	operator const std::uint64_t*() const
+	{
+		return elements_ != nullptr ? reinterpret_cast<std::uint64_t*>(&elements_[offset_]) : nullptr;
+	}
+
+	operator std::uint64_t*()
+	{
+		return elements_ != nullptr ? reinterpret_cast<std::uint64_t*>(&elements_[offset_]) : nullptr;
+	}
+
+private:
+	JNIEnv* env_;
+	jlongArray array_ = nullptr;
+	jlong* elements_ = nullptr;
+	jint offset_ = 0;
+};
+
 class FloatBuffer
 {
 public:
 	FloatBuffer(JNIEnv* env, jfloatArray array, jint offset) :
-		env_(env), array_(array), elements_(env->GetFloatArrayElements(array, false)), offset_(offset)
+		env_(env), array_(array), offset_(offset)
 	{
+		if (array != nullptr)
+		{
+			elements_ = env->GetFloatArrayElements(array, nullptr);
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -199,8 +295,13 @@ public:
 	}
 
 	FloatBuffer(JNIEnv* env, jobject buffer) :
-		env_(env), elements_(reinterpret_cast<jfloat*>(env->GetDirectBufferAddress(buffer)))
+		env_(env)
 	{
+		if (buffer != nullptr)
+		{
+			elements_ = reinterpret_cast<jfloat*>(env->GetDirectBufferAddress(buffer));
+		}
+
 		if (env->ExceptionCheck())
 		{
 			env->ExceptionDescribe();
@@ -217,14 +318,14 @@ public:
 		}
 	}
 
-	operator const float* () const
+	operator const float*() const
 	{
-		return reinterpret_cast<float*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<float*>(&elements_[offset_]) : nullptr;
 	}
 
-	operator float* ()
+	operator float*()
 	{
-		return reinterpret_cast<float*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<float*>(&elements_[offset_]) : nullptr;
 	}
 
 private:
@@ -268,14 +369,14 @@ public:
 		}
 	}
 
-	operator const unsigned char* () const
+	operator const unsigned char*() const
 	{
-		return reinterpret_cast<unsigned char*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(elements_ + offset_) : nullptr;
 	}
 
-	operator unsigned char* ()
+	operator unsigned char*()
 	{
-		return reinterpret_cast<unsigned char*>(elements_ + offset_);
+		return elements_ != nullptr ? reinterpret_cast<unsigned char*>(elements_ + offset_) : nullptr;
 	}
 
 private:
@@ -284,3 +385,75 @@ private:
 	jboolean* elements_ = nullptr;
 	jint offset_ = 0;
 };
+
+template<int Size>
+class IntRegion
+{
+public:
+	IntRegion(JNIEnv* env, jintArray array, jint offset) :
+		env_(env), array_(array), offset_(offset)
+	{
+	}
+
+	IntRegion(IntRegion const&) = delete;
+
+	~IntRegion()
+	{
+		if (array_ != nullptr)
+		{
+			env_->SetIntArrayRegion(array_, offset_, Size, buf_.data());
+		}
+	}
+
+	operator const std::int32_t* () const
+	{
+		return array_ != nullptr ? reinterpret_cast<std::int32_t*>(buf_.data()) : nullptr;
+	}
+
+	operator std::int32_t* ()
+	{
+		return array_ != nullptr ? reinterpret_cast<std::int32_t*>(buf_.data()) : nullptr;
+	}
+
+	operator const std::uint32_t* () const
+	{
+		return array_ != nullptr ? reinterpret_cast<std::uint32_t*>(buf_.data()) : nullptr;
+	}
+
+	operator std::uint32_t* ()
+	{
+		return array_ != nullptr ? reinterpret_cast<std::uint32_t*>(buf_.data()) : nullptr;
+	}
+
+private:
+	JNIEnv* env_;
+	jintArray array_ = nullptr;
+	jint offset_ = 0;
+	std::array<jint, Size> buf_;
+};
+
+#define ValidateArraySize_I(array, offset, minSize) \
+	if (array != nullptr && (env->GetArrayLength(array) - (offset) < (minSize))) { \
+		env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #array "': insufficient array size."); return 0; }
+
+#define ValidateBufferSize_I(buffer, minSize) \
+	if (buffer != nullptr) { \
+		jlong _capacity_ = env->GetDirectBufferCapacity(buffer); \
+		if (_capacity_ == -1) { \
+			env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #buffer "' is not a direct buffer."); return 0; } \
+		if (_capacity_ < (minSize)) { \
+			env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #buffer "': insufficient buffer size."); return 0; } \
+	}
+
+#define ValidateArraySize_V(array, offset, minSize) \
+	if (array != nullptr && (env->GetArrayLength(array) - (offset) < (minSize))) { \
+		env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #array "': insufficient array size."); return; }
+
+#define ValidateBufferSize_V(buffer, minSize) \
+	if (buffer != nullptr) { \
+		jlong _capacity_ = env->GetDirectBufferCapacity(buffer); \
+		if (_capacity_ == -1) { \
+			env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #buffer "' is not a direct buffer."); return; } \
+		if (_capacity_ < (minSize)) { \
+			env->ThrowNew(env->FindClass("java/lang/IllegalArgumentException"), "'" #buffer "': insufficient buffer size."); return; } \
+	}

@@ -6,7 +6,7 @@
 package gov.nasa.worldwind.draw;
 
 import gov.nasa.worldwind.geom.Matrix4;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.util.Pool;
 
@@ -56,7 +56,7 @@ public class DrawableShape implements Drawable {
             return; // element buffer unspecified or failed to bind
         }
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Use the draw context's pick mode.
         this.drawState.program.enablePickMode(dc.pickMode);
@@ -73,20 +73,20 @@ public class DrawableShape implements Drawable {
 
         // Disable triangle backface culling if requested.
         if (!this.drawState.enableCullFace) {
-            gl.glDisable(GL.GL_CULL_FACE);
+            gl.glDisable(GLES20.GL_CULL_FACE);
         }
 
         // Disable depth testing if requested.
         if (!this.drawState.enableDepthTest) {
-            gl.glDisable(GL.GL_DEPTH_TEST);
+            gl.glDisable(GLES20.GL_DEPTH_TEST);
         }
 
         // Make multi-texture unit 0 active.
-        dc.activeTextureUnit(GL.GL_TEXTURE0);
+        dc.activeTextureUnit(GLES20.GL_TEXTURE0);
 
         // Use the shape's vertex point attribute and vertex texture coordinate attribute.
         gl.glEnableVertexAttribArray(1 /*vertexTexCoord*/);
-        gl.glVertexAttribPointer(0 /*vertexPoint*/, 3, GL.GL_FLOAT, false, this.drawState.vertexStride, 0 /*offset*/);
+        gl.glVertexAttribPointer(0 /*vertexPoint*/, 3, GLES20.GL_FLOAT, false, this.drawState.vertexStride, 0 /*offset*/);
 
         // Draw the specified primitives.
         for (int idx = 0; idx < this.drawState.primCount; idx++) {
@@ -100,20 +100,20 @@ public class DrawableShape implements Drawable {
                 this.drawState.program.enableTexture(false);
             }
 
-            gl.glVertexAttribPointer(1 /*vertexTexCoord*/, prim.texCoordAttrib.size, GL.GL_FLOAT, false, this.drawState.vertexStride, prim.texCoordAttrib.offset);
+            gl.glVertexAttribPointer(1 /*vertexTexCoord*/, prim.texCoordAttrib.size, GLES20.GL_FLOAT, false, this.drawState.vertexStride, prim.texCoordAttrib.offset);
             gl.glLineWidth(prim.lineWidth);
             gl.glDrawElements(prim.mode, prim.count, prim.type, prim.offset);
         }
 
         // Restore the default WorldWind OpenGL state.
         if (!this.drawState.enableCullFace) {
-            gl.glEnable(GL.GL_CULL_FACE);
+            gl.glEnable(GLES20.GL_CULL_FACE);
         }
         if (!this.drawState.enableDepthTest) {
-            gl.glEnable(GL.GL_DEPTH_TEST);
+            gl.glEnable(GLES20.GL_DEPTH_TEST);
         }
         gl.glLineWidth(1);
-        gl.glEnable(GL.GL_CULL_FACE);
+        gl.glEnable(GLES20.GL_CULL_FACE);
         gl.glDisableVertexAttribArray(1 /*vertexTexCoord*/);
     }
 }

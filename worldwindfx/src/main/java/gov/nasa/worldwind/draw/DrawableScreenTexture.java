@@ -6,7 +6,7 @@
 package gov.nasa.worldwind.draw;
 
 import gov.nasa.worldwind.geom.Matrix4;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.Color;
@@ -63,21 +63,21 @@ public class DrawableScreenTexture implements Drawable {
             return; // vertex buffer failed to bind
         }
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Use the draw context's pick mode and use the drawable's color.
         this.program.enablePickMode(dc.pickMode);
 
         // Make multi-texture unit 0 active.
-        dc.activeTextureUnit(GL.GL_TEXTURE0);
+        dc.activeTextureUnit(GLES20.GL_TEXTURE0);
 
         // Disable writing to the depth buffer.
         gl.glDepthMask(false);
 
         // Use a unit square as the vertex point and vertex tex coord attributes.
         gl.glEnableVertexAttribArray(1 /*vertexTexCoord*/); // only vertexPoint is enabled by default
-        gl.glVertexAttribPointer(0 /*vertexPoint*/, 2, GL.GL_FLOAT, false, 0, 0);
-        gl.glVertexAttribPointer(1 /*vertexTexCoord*/, 2, GL.GL_FLOAT, false, 0, 0);
+        gl.glVertexAttribPointer(0 /*vertexPoint*/, 2, GLES20.GL_FLOAT, false, 0, 0);
+        gl.glVertexAttribPointer(1 /*vertexTexCoord*/, 2, GLES20.GL_FLOAT, false, 0, 0);
 
         // Draw this DrawableScreenTextures.
         this.doDraw(dc, this);
@@ -111,19 +111,19 @@ public class DrawableScreenTexture implements Drawable {
         drawable.mvpMatrix.setToMultiply(dc.screenProjection, drawable.unitSquareTransform);
         drawable.program.loadModelviewProjection(drawable.mvpMatrix);
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Disable depth testing if requested.
         if (!drawable.enableDepthTest) {
-            gl.glDisable(GL.GL_DEPTH_TEST);
+            gl.glDisable(GLES20.GL_DEPTH_TEST);
         }
 
         // Draw the unit square as triangles.
-        gl.glDrawArrays(GL.GL_TRIANGLE_STRIP, 0, 4);
+        gl.glDrawArrays(GLES20.GL_TRIANGLE_STRIP, 0, 4);
 
         // Restore the default WorldWind OpenGL state.
         if (!drawable.enableDepthTest) {
-            gl.glEnable(GL.GL_DEPTH_TEST);
+            gl.glEnable(GLES20.GL_DEPTH_TEST);
         }
     }
 

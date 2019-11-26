@@ -6,7 +6,7 @@
 package gov.nasa.worldwind.render;
 
 import gov.nasa.worldwind.draw.DrawContext;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.util.Logger;
 
@@ -112,12 +112,12 @@ public class ShaderProgram implements RenderResource {
 
     protected void buildProgram(DrawContext dc, String[] programSource, String[] attribBindings) {
         int[] status = new int[1];
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
-        int vs = gl.glCreateShader(GL.GL_VERTEX_SHADER);
+        int vs = gl.glCreateShader(GLES20.GL_VERTEX_SHADER);
         gl.glShaderSource(vs, programSource[VERTEX_SHADER]);
         gl.glCompileShader(vs);
-        gl.glGetShaderiv(vs, GL.GL_COMPILE_STATUS, status, 0);
+        gl.glGetShaderiv(vs, GLES20.GL_COMPILE_STATUS, status, 0);
 
         if (status[0] != gl.GL_TRUE) {
             String msg = gl.glGetShaderInfoLog(vs);
@@ -127,12 +127,12 @@ public class ShaderProgram implements RenderResource {
             return;
         }
 
-        int fs = gl.glCreateShader(GL.GL_FRAGMENT_SHADER);
+        int fs = gl.glCreateShader(GLES20.GL_FRAGMENT_SHADER);
         gl.glShaderSource(fs, programSource[FRAGMENT_SHADER]);
         gl.glCompileShader(fs);
-        gl.glGetShaderiv(vs, GL.GL_COMPILE_STATUS, status, 0);
+        gl.glGetShaderiv(vs, GLES20.GL_COMPILE_STATUS, status, 0);
 
-        if (status[0] != GL.GL_TRUE) {
+        if (status[0] != GLES20.GL_TRUE) {
             String msg = gl.glGetShaderInfoLog(fs);
             gl.glDeleteShader(vs);
             gl.glDeleteShader(fs);
@@ -152,9 +152,9 @@ public class ShaderProgram implements RenderResource {
         }
 
         gl.glLinkProgram(program);
-        gl.glGetProgramiv(program, GL.GL_LINK_STATUS, status, 0);
+        gl.glGetProgramiv(program, GLES20.GL_LINK_STATUS, status, 0);
 
-        if (status[0] != GL.GL_TRUE) {
+        if (status[0] != GLES20.GL_TRUE) {
             String msg = gl.glGetProgramInfoLog(program);
             gl.glDeleteProgram(program);
             gl.glDeleteShader(vs);
@@ -175,7 +175,7 @@ public class ShaderProgram implements RenderResource {
 
     protected void deleteProgram(DrawContext dc) {
         if (this.programId != 0) {
-            GL gl = Platform.getGL();
+            GLES20 gl = Platform.getGL();
             gl.glDeleteProgram(this.programId);
             gl.glDeleteShader(this.shaderId[VERTEX_SHADER]);
             gl.glDeleteShader(this.shaderId[FRAGMENT_SHADER]);

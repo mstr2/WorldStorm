@@ -5,15 +5,15 @@ import gov.nasa.worldwind.platform.data.SQLiteDatabase;
 public class WinPlatform implements PlatformImpl {
 
     private final GLES20Impl gl = new GLES20Impl();
-    private final EGLInterface egl = new EGLInterface();
+    private final EGL14 egl = new EGL14Impl();
 
     @Override
-    public GL getGL() {
+    public GLES20 getGL() {
         return gl;
     }
 
     @Override
-    public EGLInterface getEGL() {
+    public EGL14 getEGL() {
         return egl;
     }
 

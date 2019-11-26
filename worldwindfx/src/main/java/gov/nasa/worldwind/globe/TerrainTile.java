@@ -11,7 +11,7 @@ import java.nio.FloatBuffer;
 
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.RenderContext;
 import gov.nasa.worldwind.util.Level;
@@ -118,6 +118,6 @@ public class TerrainTile extends Tile {
         FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
         buffer.put(this.points).rewind();
 
-        return rc.putBufferObject(this.pointBufferKey, new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer));
+        return rc.putBufferObject(this.pointBufferKey, new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer));
     }
 }

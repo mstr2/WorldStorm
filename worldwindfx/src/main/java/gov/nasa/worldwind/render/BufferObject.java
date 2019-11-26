@@ -9,7 +9,7 @@ import java.nio.Buffer;
 
 import gov.nasa.worldwind.draw.DrawContext;
 import gov.nasa.worldwind.geom.Range;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.util.Logger;
 import gov.nasa.worldwind.util.SparseArray;
@@ -107,6 +107,6 @@ public class BufferObject implements RenderResource {
     }
 
     protected void loadBufferObjectData(DrawContext dc) {
-        Platform.getGL().glBufferData(this.bufferTarget, this.bufferByteCount, this.buffer, GL.GL_STATIC_DRAW);
+        Platform.getGL().glBufferData(this.bufferTarget, this.bufferByteCount, this.buffer, GLES20.GL_STATIC_DRAW);
     }
 }

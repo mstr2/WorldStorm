@@ -18,7 +18,7 @@
 package gov.nasa.worldwind.platform;
 
 /** OpenGL ES 2.0 */
-public interface GL {
+public interface GLES20 {
 
     int GL_ACTIVE_TEXTURE = 0x84E0;
     int GL_DEPTH_BUFFER_BIT = 0x00000100;

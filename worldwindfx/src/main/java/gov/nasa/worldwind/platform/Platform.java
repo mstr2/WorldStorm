@@ -6,11 +6,11 @@ public final class Platform {
 
     private static final PlatformImpl platformImpl = initializePlatform();
 
-    public static GL getGL() {
+    public static GLES20 getGL() {
         return platformImpl.getGL();
     }
 
-    public static EGL getEGL() {
+    public static EGL14 getEGL() {
         return platformImpl.getEGL();
     }
 

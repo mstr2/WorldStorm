@@ -5,7 +5,7 @@ import java.nio.Buffer;
 import java.nio.FloatBuffer;
 import java.nio.IntBuffer;
 
-public final class GLES20Impl implements GL {
+public final class GLES20Impl implements GLES20 {
     static {
         File f = new File(new File("."), "worldwindfx-windows.dll");
         System.load(f.getAbsolutePath());

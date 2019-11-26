@@ -7,7 +7,7 @@ package gov.nasa.worldwind.draw;
 
 import gov.nasa.worldwind.geom.Matrix4;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.render.BasicShaderProgram;
 import gov.nasa.worldwind.render.Color;
@@ -73,7 +73,7 @@ public class DrawableTessellation implements Drawable {
         this.program.enableTexture(false);
         this.program.loadColor(this.color);
 
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Suppress writes to the OpenGL depth buffer.
         gl.glDepthMask(false);

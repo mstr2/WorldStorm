@@ -7,7 +7,7 @@ package gov.nasa.worldwind.render;
 
 import gov.nasa.worldwind.draw.DrawContext;
 import gov.nasa.worldwind.geom.Matrix3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.util.glu.GLUtils;
 import gov.nasa.worldwind.platform.Platform;
 import gov.nasa.worldwind.util.Logger;
@@ -143,9 +143,9 @@ public class Texture implements RenderResource {
         try {
             // Create the OpenGL texture 2D object.
             this.textureName = new int[1];
-            GL gl = Platform.getGL();
+            GLES20 gl = Platform.getGL();
             gl.glGenTextures(1, this.textureName, 0);
-            gl.glBindTexture(GL.GL_TEXTURE_2D, this.textureName[0]);
+            gl.glBindTexture(GLES20.GL_TEXTURE_2D, this.textureName[0]);
 
             // Specify the texture object's image data, either by loading a bitmap or by allocating an empty image.
             if (this.imageBitmap != null) {
@@ -159,7 +159,7 @@ public class Texture implements RenderResource {
             this.setTexParameters(dc);
         } finally {
             // Restore the current OpenGL texture object binding.
-            Platform.getGL().glBindTexture(GL.GL_TEXTURE_2D, currentTexture);
+            Platform.getGL().glBindTexture(GLES20.GL_TEXTURE_2D, currentTexture);
         }
     }
 
@@ -170,7 +170,7 @@ public class Texture implements RenderResource {
 
     protected void allocTexImage(DrawContext dc) {
         // Allocate texture memory for the OpenGL texture 2D object. The texture memory is initialized with 0.
-        Platform.getGL().glTexImage2D(GL.GL_TEXTURE_2D, 0 /*level*/,
+        Platform.getGL().glTexImage2D(GLES20.GL_TEXTURE_2D, 0 /*level*/,
             this.textureFormat, this.textureWidth, this.textureHeight, 0 /*border*/,
             this.textureFormat, this.textureType, null /*pixels*/);
     }
@@ -178,14 +178,14 @@ public class Texture implements RenderResource {
     protected void loadTexImage(DrawContext dc, Bitmap bitmap) {
         try {
             // Specify the OpenGL texture 2D object's base image data (level 0).
-            GLUtils.texImage2D(GL.GL_TEXTURE_2D, 0 /*level*/, bitmap, 0 /*border*/);
+            GLUtils.texImage2D(GLES20.GL_TEXTURE_2D, 0 /*level*/, bitmap, 0 /*border*/);
 
             // If the bitmap has power-of-two dimensions, generate the texture object's image data for image levels 1
             // through level N, and configure the texture object's filtering modes to use those image levels.
             // TODO consider using Bitmap.hasMipMap
             this.imageHasMipMap = WWMath.isPowerOfTwo(bitmap.getWidth()) && WWMath.isPowerOfTwo(bitmap.getHeight());
             if (this.imageHasMipMap) {
-                Platform.getGL().glGenerateMipmap(GL.GL_TEXTURE_2D);
+                Platform.getGL().glGenerateMipmap(GLES20.GL_TEXTURE_2D);
             }
         } catch (Exception e) {
             // The Android utility was unable to load the texture image data.
@@ -200,41 +200,41 @@ public class Texture implements RenderResource {
 
     protected void setTexParameters(DrawContext dc) {
         int param;
-        GL gl = Platform.getGL();
+        GLES20 gl = Platform.getGL();
 
         // Configure the OpenGL texture minification function. Always use a nearest filtering function in picking mode.
         if (dc.pickMode) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
-        } else if ((param = this.getTexParameter(GL.GL_TEXTURE_MIN_FILTER)) != 0) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, param);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, GLES20.GL_NEAREST);
+        } else if ((param = this.getTexParameter(GLES20.GL_TEXTURE_MIN_FILTER)) != 0) {
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER, param);
         } else {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER,
-                this.imageHasMipMap ? GL.GL_LINEAR_MIPMAP_LINEAR : GL.GL_LINEAR);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MIN_FILTER,
+                this.imageHasMipMap ? GLES20.GL_LINEAR_MIPMAP_LINEAR : GLES20.GL_LINEAR);
         }
 
         // Configure the OpenGL texture magnification function. Always use a nearest filtering function in picking mode.
         if (dc.pickMode) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
-        } else if ((param = this.getTexParameter(GL.GL_TEXTURE_MAG_FILTER)) != 0) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, param);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_NEAREST);
+        } else if ((param = this.getTexParameter(GLES20.GL_TEXTURE_MAG_FILTER)) != 0) {
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, param);
         } else {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_LINEAR);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_MAG_FILTER, GLES20.GL_LINEAR);
         }
 
         // Configure the OpenGL texture wrapping function for texture coordinate S. Default to the edge clamping
         // function to render image tiles without seams.
-        if ((param = this.getTexParameter(GL.GL_TEXTURE_WRAP_S)) != 0) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, param);
+        if ((param = this.getTexParameter(GLES20.GL_TEXTURE_WRAP_S)) != 0) {
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, param);
         } else {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_CLAMP_TO_EDGE);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_S, GLES20.GL_CLAMP_TO_EDGE);
         }
 
         // Configure the OpenGL texture wrapping function for texture coordinate T. Default to the edge clamping
         // function to render image tiles without seams.
-        if ((param = this.getTexParameter(GL.GL_TEXTURE_WRAP_T)) != 0) {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, param);
+        if ((param = this.getTexParameter(GLES20.GL_TEXTURE_WRAP_T)) != 0) {
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, param);
         } else {
-            gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_CLAMP_TO_EDGE);
+            gl.glTexParameteri(GLES20.GL_TEXTURE_2D, GLES20.GL_TEXTURE_WRAP_T, GLES20.GL_CLAMP_TO_EDGE);
         }
     }
 
@@ -245,32 +245,32 @@ public class Texture implements RenderResource {
         int widthPow2 = WWMath.powerOfTwoCeiling(width);
         int bytesPerRow = widthPow2 * 4;
         switch (type) {
-            case GL.GL_UNSIGNED_BYTE:
+            case GLES20.GL_UNSIGNED_BYTE:
                 switch (format) {
-                    case GL.GL_ALPHA:
+                    case GLES20.GL_ALPHA:
                         bytesPerRow = widthPow2; // 8 bits per pixel
                         break;
-                    case GL.GL_RGB:
+                    case GLES20.GL_RGB:
                         bytesPerRow = widthPow2 * 3; // 24 bits per pixel
                         break;
-                    case GL.GL_RGBA:
+                    case GLES20.GL_RGBA:
                         bytesPerRow = widthPow2 * 4; // 32 bits per pixel
                         break;
-                    case GL.GL_LUMINANCE:
+                    case GLES20.GL_LUMINANCE:
                         bytesPerRow = widthPow2; // 8 bits per pixel
                         break;
-                    case GL.GL_LUMINANCE_ALPHA:
+                    case GLES20.GL_LUMINANCE_ALPHA:
                         bytesPerRow = widthPow2 * 2; // 16 bits per pixel
                         break;
                 }
                 break;
-            case GL.GL_UNSIGNED_INT:
+            case GLES20.GL_UNSIGNED_INT:
                 bytesPerRow = widthPow2 * 4; // 32 bits per pixel
                 break;
-            case GL.GL_UNSIGNED_SHORT:
-            case GL.GL_UNSIGNED_SHORT_5_6_5:
-            case GL.GL_UNSIGNED_SHORT_4_4_4_4:
-            case GL.GL_UNSIGNED_SHORT_5_5_5_1:
+            case GLES20.GL_UNSIGNED_SHORT:
+            case GLES20.GL_UNSIGNED_SHORT_5_6_5:
+            case GLES20.GL_UNSIGNED_SHORT_4_4_4_4:
+            case GLES20.GL_UNSIGNED_SHORT_5_5_5_1:
                 bytesPerRow = widthPow2 * 2; // 16 bits per pixel
                 break;
         }

@@ -17,7 +17,7 @@ import gov.nasa.worldwind.draw.BasicDrawableTerrain;
 import gov.nasa.worldwind.geom.Range;
 import gov.nasa.worldwind.geom.Sector;
 import gov.nasa.worldwind.geom.Vec3;
-import gov.nasa.worldwind.platform.GL;
+import gov.nasa.worldwind.platform.GLES20;
 import gov.nasa.worldwind.render.BufferObject;
 import gov.nasa.worldwind.render.RenderContext;
 import gov.nasa.worldwind.util.Level;
@@ -250,7 +250,7 @@ public class BasicTessellator implements Tessellator, TileFactory {
             FloatBuffer buffer = ByteBuffer.allocateDirect(size).order(ByteOrder.nativeOrder()).asFloatBuffer();
             buffer.put(this.levelSetVertexTexCoords).rewind();
             this.levelSetVertexTexCoordBuffer = rc.putBufferObject(this.levelSetVertexTexCoordKey,
-                new BufferObject(GL.GL_ARRAY_BUFFER, size, buffer));
+                new BufferObject(GLES20.GL_ARRAY_BUFFER, size, buffer));
         }
 
         // Retrieve or create the level set's OpenGL element buffer object.
@@ -265,7 +265,7 @@ public class BasicTessellator implements Tessellator, TileFactory {
             this.levelSetTriStripElementRange.upper = buffer.position();
             buffer.rewind();
             this.levelSetElementBuffer = rc.putBufferObject(this.levelSetElementKey,
-                new BufferObject(GL.GL_ELEMENT_ARRAY_BUFFER, size, buffer));
+                new BufferObject(GLES20.GL_ELEMENT_ARRAY_BUFFER, size, buffer));
         }
     }
 
